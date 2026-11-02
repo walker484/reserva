@@ -1,1 +1,379 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVI WALKER | Administração</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff;
+  color:#174ea6;
+}
+
+header{
+  background:#fff;
+  border-bottom:1px solid #dce8f8;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+header h1{font-size:18px;margin:0}
+header p{font-size:11px;margin:4px 0 0;color:#64748b}
+
+button{cursor:pointer;font-family:inherit}
+
+.sair{
+  background:#fff;
+  color:#174ea6;
+  border:1px solid #174ea6;
+  border-radius:7px;
+  padding:7px 10px;
+  font-size:11px;
+}
+
+main{
+  max-width:950px;
+  margin:auto;
+  padding:14px;
+}
+
+.boas-vindas{
+  background:#fff;
+  border:1px solid #dce8f8;
+  border-radius:10px;
+  padding:13px;
+  margin-bottom:14px;
+}
+
+.boas-vindas h2{font-size:16px;margin:0 0 5px}
+.boas-vindas p{font-size:12px;color:#64748b;margin:0}
+
+.titulo-servicos{
+  font-size:14px;
+  margin:15px 0 9px;
+}
+
+.grade-servicos{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+
+.servico{
+  background:#fff;
+  border:1px solid #dce8f8;
+  border-radius:8px;
+  padding:0;
+  overflow:hidden;
+  color:#174ea6;
+  text-align:center;
+  min-width:0;
+}
+
+.servico:active{transform:scale(.97)}
+.servico:hover{border-color:#174ea6}
+
+.servico img{
+  display:block;
+  width:100%;
+  height:75px;
+  object-fit:cover;
+}
+
+.servico span{
+  display:flex;
+  min-height:35px;
+  align-items:center;
+  justify-content:center;
+  padding:5px 3px;
+  font-size:10px;
+  line-height:1.2;
+  font-weight:bold;
+}
+
+.modal-fundo{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  padding:18px;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.modal{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 8px 30px #0002;
+}
+
+.modal h2{font-size:19px;margin:0 0 8px}
+
+.modal p{
+  font-size:13px;
+  line-height:1.5;
+  color:#53657c;
+}
+
+.modal-acoes{
+  display:flex;
+  gap:8px;
+  margin-top:15px;
+}
+
+.modal-acoes button{
+  flex:1;
+  padding:10px;
+  border-radius:7px;
+  font-size:12px;
+}
+
+.btn-fechar{
+  background:#fff;
+  color:#174ea6;
+  border:1px solid #174ea6;
+}
+
+.btn-abrir{
+  background:#174ea6;
+  color:#fff;
+  border:1px solid #174ea6;
+}
+
+@media(max-width:500px){
+  main{padding:10px}
+  .grade-servicos{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:6px;
+  }
+  .servico img{height:62px}
+  .servico span{font-size:9px;min-height:32px}
+  header h1{font-size:16px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="carregando" style="text-align:center;padding:50px">
+Verificando acesso administrativo...
+</div>
+
+<div id="area-admin" style="display:none">
+
+<header>
+  <div>
+    <h1>DAVI WALKER</h1>
+    <p>Painel administrativo</p>
+  </div>
+  <button class="sair" onclick="sair()">Sair</button>
+</header>
+
+<main>
+
+<section class="boas-vindas">
+  <h2>Bem-vindo, Davi!</h2>
+  <p>Gerencie seus serviços e acompanhe as atividades da plataforma.</p>
+</section>
+
+<h2 class="titulo-servicos">Meus serviços</h2>
+
+<section class="grade-servicos" id="grade-servicos"></section>
+
+</main>
+</div>
+
+<div class="modal-fundo" id="modal-fundo">
+  <div class="modal">
+    <h2 id="modal-titulo">Serviço</h2>
+    <p id="modal-descricao"></p>
+
+    <div class="modal-acoes">
+      <button class="btn-fechar" onclick="fecharServico()">Voltar</button>
+      <button class="btn-abrir" onclick="abrirAreaServico()">Abrir serviço</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyDsZUHfZ7EBatnMwwR4FKgPWLjZybIm9KI",
+authDomain:"walker-midia.firebaseapp.com",
+databaseURL:"https://walker-midia-default-rtdb.firebaseio.com",
+projectId:"walker-midia",
+storageBucket:"walker-midia.firebasestorage.app",
+messagingSenderId:"223143706690",
+appId:"1:223143706690:web:3c9e81a0d21173a59caddb"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+
+const ADMIN_UID="7TAC1PMMwAMyrL3LUcboCHKjWJq2";
+
+const servicos=[
+{
+nome:"SEO",
+descricao:"Estratégias para ajudar empresas e produtos a aparecerem nas pesquisas do Google.",
+imagem:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600"
+},
+{
+nome:"Tráfego Pago",
+descricao:"Criação e planejamento de anúncios pagos.",
+imagem:"https://images.unsplash.com/photo-1557838923-2985c318be48?w=600"
+},
+{
+nome:"Marketing de Conteúdo",
+descricao:"Criação de textos e conteúdos para apresentar produtos e empresas.",
+imagem:"https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600"
+},
+{
+nome:"Redes Sociais",
+descricao:"Planejamento de publicações e divulgação nas redes sociais.",
+imagem:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600"
+},
+{
+nome:"E-mail Marketing",
+descricao:"Criação de mensagens para apresentar novidades e ofertas.",
+imagem:"https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600"
+},
+{
+nome:"Métricas",
+descricao:"Acompanhamento dos resultados das campanhas.",
+imagem:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600"
+},
+{
+nome:"Fotografia de Produtos",
+descricao:"Apresentação visual de produtos por fotografias.",
+imagem:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600"
+},
+{
+nome:"Vídeos Publicitários",
+descricao:"Produção e planejamento de vídeos publicitários.",
+imagem:"https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600"
+},
+{
+nome:"Catálogo e Loja Virtual",
+descricao:"Organização de produtos em catálogos digitais.",
+imagem:"https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600"
+},
+{
+nome:"Marketing Local",
+descricao:"Divulgação de empresas para alcançar clientes da região.",
+imagem:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600"
+},
+{
+nome:"Planejamento de Campanhas",
+descricao:"Organização de ações e campanhas de divulgação.",
+imagem:"https://images.unsplash.com/photo-1552664730-d307ca884978?w=600"
+},
+{
+nome:"Identidade Visual",
+descricao:"Criação e organização da apresentação visual da marca.",
+imagem:"https://images.unsplash.com/photo-1634942536790-253f5f5e7e6b?w=600"
+}
+];
+
+let servicoSelecionado=null;
+
+function montarServicos(){
+const grade=document.getElementById("grade-servicos");
+
+servicos.forEach((servico,indice)=>{
+const botao=document.createElement("button");
+botao.type="button";
+botao.className="servico";
+
+const imagem=document.createElement("img");
+imagem.src=servico.imagem;
+imagem.alt=servico.nome;
+imagem.loading="lazy";
+
+const nome=document.createElement("span");
+nome.textContent=servico.nome;
+
+botao.append(imagem,nome);
+botao.addEventListener("click",()=>abrirServico(indice));
+
+grade.appendChild(botao);
+});
+}
+
+function abrirServico(indice){
+servicoSelecionado=servicos[indice];
+
+document.getElementById("modal-titulo").textContent=
+servicoSelecionado.nome;
+
+document.getElementById("modal-descricao").textContent=
+servicoSelecionado.descricao;
+
+document.getElementById("modal-fundo").style.display="flex";
+}
+
+window.fecharServico=function(){
+document.getElementById("modal-fundo").style.display="none";
+};
+
+window.abrirAreaServico=function(){
+if(!servicoSelecionado)return;
+
+alert(
+"Serviço selecionado: "+servicoSelecionado.nome+
+"\nA área de gerenciamento será construída na próxima etapa."
+);
+};
+
+window.sair=async function(){
+await signOut(auth);
+sessionStorage.removeItem("perfilDaviWalker");
+sessionStorage.removeItem("loginBemVindo");
+window.location.href="./index.html";
+};
+
+onAuthStateChanged(auth,usuario=>{
+document.getElementById("carregando").style.display="none";
+
+if(!usuario){
+window.location.href="./index.html";
+return;
+}
+
+if(usuario.uid!==ADMIN_UID){
+window.location.href="./entrada.html";
+return;
+}
+
+sessionStorage.setItem("perfilDaviWalker","admin");
+
+montarServicos();
+document.getElementById("area-admin").style.display="block";
+});
+</script>
+
+</body>
+</html>
+
