@@ -38,7 +38,7 @@ const rtdb = getDatabase(app);
 // UID DO ADMINISTRADOR
 const ADMIN_UID = "7TAC1PMMwAMyrL3LUcboCHKjWJq2";
 
-// STATUS REALTIME DATABASE
+// STATUS FIREBASE
 const bolinha = document.getElementById("bolinha-firebase");
 const textoStatus = document.getElementById("texto-firebase");
 
@@ -67,7 +67,7 @@ const campoSenha = document.getElementById("senha");
 const mensagem = document.getElementById("erro");
 const botaoEntrar = document.getElementById("btn-entrar");
 
-// MOSTRAR MENSAGEM
+// MENSAGEM
 function mostrarMensagem(texto) {
   if (!mensagem) return;
 
@@ -97,19 +97,23 @@ if (formulario) {
         senha
       );
 
-      // CONFIRMAR PERFIL
+      // IDENTIFICAR PERFIL
       const ehAdmin = resultado.user.uid === ADMIN_UID;
 
-      // GUARDAR PERFIL PARA A PRÓXIMA PÁGINA
-      sessionStorage.setItem(
-        "perfilDaviWalker",
-        ehAdmin ? "admin" : "cliente"
-      );
+      if (ehAdmin) {
+        sessionStorage.setItem("perfilDaviWalker", "admin");
+        sessionStorage.setItem("loginBemVindo", "sim");
 
-      sessionStorage.setItem("loginBemVindo", "sim");
+        // ADMIN VAI PARA O PAINEL ADMINISTRATIVO
+        window.location.href = "./admin.html";
 
-      // ADMIN E CLIENTE VÃO PARA A PÁGINA DE ENTRADA
-      window.location.href = "./entrada.html";
+      } else {
+        sessionStorage.setItem("perfilDaviWalker", "cliente");
+        sessionStorage.setItem("loginBemVindo", "sim");
+
+        // CLIENTE VAI PARA O PAINEL DO CLIENTE
+        window.location.href = "./entrada.html";
+      }
 
     } catch (erro) {
       console.error("Erro no login:", erro);
