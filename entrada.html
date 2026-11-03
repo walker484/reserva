@@ -31,6 +31,11 @@ header p{font-size:11px;margin:4px 0 0;color:#64748b}
 
 button{cursor:pointer;font-family:inherit}
 
+button:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+
 .sair{
   background:#fff;
   color:#174ea6;
@@ -55,7 +60,7 @@ main{
 }
 
 .boas-vindas h2{font-size:16px;margin:0 0 5px}
-.boas-vindas p{font-size:12px;color:#64748b;margin:0}
+.boas-vindas p{font-size:12px;color:#64748b;margin:0;line-height:1.5}
 
 .titulo-servicos{
   font-size:14px;
@@ -100,6 +105,70 @@ main{
   font-weight:bold;
 }
 
+.secao-pedidos{
+  margin-top:25px;
+  border-top:1px solid #dce8f8;
+  padding-top:15px;
+}
+
+.secao-pedidos h2{
+  font-size:16px;
+  margin:0 0 5px;
+}
+
+.subtitulo{
+  color:#64748b;
+  font-size:12px;
+  margin:0 0 12px;
+}
+
+.lista-pedidos{
+  display:grid;
+  gap:9px;
+}
+
+.pedido-card{
+  border:1px solid #dce8f8;
+  border-radius:9px;
+  padding:12px;
+  background:#fff;
+}
+
+.pedido-card h3{
+  font-size:14px;
+  margin:0 0 7px;
+}
+
+.pedido-card p{
+  font-size:12px;
+  color:#64748b;
+  margin:5px 0;
+  line-height:1.4;
+}
+
+.status{
+  display:inline-block;
+  background:#eef5ff;
+  color:#174ea6;
+  border-radius:5px;
+  padding:5px 8px;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.btn-detalhes{
+  display:block;
+  width:100%;
+  margin-top:10px;
+  padding:9px;
+  border:1px solid #174ea6;
+  border-radius:7px;
+  color:#174ea6;
+  background:#fff;
+  font-size:12px;
+  font-weight:bold;
+}
+
 .modal-fundo{
   display:none;
   position:fixed;
@@ -114,7 +183,7 @@ main{
 
 .modal{
   width:100%;
-  max-width:420px;
+  max-width:440px;
   background:#fff;
   border-radius:12px;
   padding:18px;
@@ -140,7 +209,8 @@ main{
   margin-bottom:5px;
 }
 
-.campo input{
+.campo input,
+.campo textarea{
   width:100%;
   padding:11px;
   border:1px solid #dce8f8;
@@ -148,9 +218,16 @@ main{
   outline:none;
   font-size:13px;
   color:#174ea6;
+  font-family:Arial,sans-serif;
 }
 
-.campo input:focus{border-color:#174ea6}
+.campo textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.campo input:focus,
+.campo textarea:focus{border-color:#174ea6}
 
 .modal-acoes{
   display:flex;
@@ -177,7 +254,7 @@ main{
   border:1px solid #174ea6;
 }
 
-#mensagem{
+.mensagem-sistema{
   display:none;
   margin-top:12px;
   padding:12px;
@@ -186,6 +263,88 @@ main{
   color:#174ea6;
   font-size:12px;
   line-height:1.5;
+}
+
+.detalhe-pedido{
+  display:none;
+  margin-top:12px;
+  border-top:1px solid #dce8f8;
+  padding-top:12px;
+}
+
+.historico{
+  display:grid;
+  gap:8px;
+  margin:12px 0;
+}
+
+.mensagem-item{
+  background:#f2f6fc;
+  border-radius:8px;
+  padding:10px;
+  color:#334155;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.mensagem-item strong{
+  display:block;
+  color:#174ea6;
+  margin-bottom:4px;
+}
+
+.link-entrega{
+  display:none;
+  margin:12px 0;
+  padding:12px;
+  border:1px solid #dce8f8;
+  border-radius:8px;
+  font-size:12px;
+}
+
+.link-entrega a{
+  display:block;
+  margin-top:7px;
+  color:#174ea6;
+  font-weight:bold;
+  overflow-wrap:anywhere;
+}
+
+.resposta-area{
+  margin-top:14px;
+  border-top:1px solid #dce8f8;
+  padding-top:12px;
+}
+
+.resposta-area textarea{
+  width:100%;
+  min-height:75px;
+  padding:10px;
+  border:1px solid #dce8f8;
+  border-radius:7px;
+  font-family:Arial,sans-serif;
+  font-size:13px;
+  resize:vertical;
+}
+
+.btn-enviar-resposta{
+  width:100%;
+  margin-top:8px;
+  padding:10px;
+  background:#174ea6;
+  color:white;
+  border:0;
+  border-radius:7px;
+  font-size:12px;
+}
+
+.vazio{
+  padding:15px;
+  border:1px dashed #cbd8e8;
+  border-radius:8px;
+  color:#64748b;
+  font-size:12px;
+  text-align:center;
 }
 
 @media(max-width:500px){
@@ -208,21 +367,31 @@ main{
     <h1>DAVI WALKER</h1>
     <p>Área do Cliente</p>
   </div>
-  <button class="sair" onclick="sair()">Sair</button>
+  <button class="sair" id="btn-sair">Sair</button>
 </header>
 
 <main>
 
 <section class="boas-vindas">
   <h2>Bem-vindo à área do cliente!</h2>
-  <p>Escolha um serviço, informe seus dados e envie sua solicitação para Davi Walker.</p>
+  <p>Escolha um serviço, informe seus dados e envie sua solicitação para Davi Walker. Depois acompanhe o atendimento nesta página.</p>
 </section>
 
 <h2 class="titulo-servicos">Escolha o serviço desejado</h2>
 
 <section class="grade-servicos" id="grade-servicos"></section>
 
+<section class="secao-pedidos">
+  <h2>Meus pedidos</h2>
+  <p class="subtitulo">Acompanhe o andamento das suas solicitações.</p>
+  <div id="lista-pedidos" class="lista-pedidos">
+    <div class="vazio">Carregando seus pedidos...</div>
+  </div>
+</section>
+
 </main>
+
+<!-- MODAL DE NOVO PEDIDO -->
 
 <div class="modal-fundo" id="modal-fundo">
   <div class="modal">
@@ -241,21 +410,104 @@ main{
     </div>
 
     <div class="campo">
-      <label for="site">Site ou URL</label>
+      <label for="site">Site ou URL (opcional)</label>
       <input id="site" type="url" placeholder="https://www.suaempresa.com.br">
     </div>
 
-    <div class="modal-acoes">
-      <button class="btn-fechar" onclick="fecharServico()">Voltar</button>
-      <button class="btn-abrir" onclick="enviarPedido()">Enviar pedido</button>
+    <div class="campo">
+      <label for="descricao-pedido">O que você precisa?</label>
+      <textarea id="descricao-pedido" placeholder="Conte um pouco sobre o serviço que deseja solicitar..."></textarea>
     </div>
 
-    <div id="mensagem"></div>
+    <div class="modal-acoes">
+      <button class="btn-fechar" id="btn-voltar">Voltar</button>
+      <button class="btn-abrir" id="btn-enviar-pedido">Enviar pedido</button>
+    </div>
+
+    <div class="mensagem-sistema" id="mensagem"></div>
 
   </div>
 </div>
 
-<script>
+<!-- MODAL DE ACOMPANHAMENTO -->
+
+<div class="modal-fundo" id="modal-detalhe-fundo">
+  <div class="modal">
+
+    <h2 id="detalhe-titulo">Detalhes do pedido</h2>
+    <p id="detalhe-status"></p>
+    <p id="detalhe-empresa"></p>
+
+    <div class="link-entrega" id="link-entrega">
+      <strong>Seu serviço foi entregue!</strong>
+      <a id="link-entrega-url" href="#" target="_blank" rel="noopener noreferrer">Abrir serviço</a>
+    </div>
+
+    <div class="detalhe-pedido">
+      <strong style="font-size:13px">Conversa do pedido</strong>
+      <div class="historico" id="historico"></div>
+
+      <div class="resposta-area">
+        <label for="texto-resposta" style="font-size:12px;font-weight:bold;display:block;margin-bottom:6px">
+          Enviar mensagem ao ADM
+        </label>
+        <textarea id="texto-resposta" placeholder="Digite sua mensagem..."></textarea>
+        <button class="btn-enviar-resposta" id="btn-enviar-resposta">
+          Enviar mensagem
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-acoes">
+      <button class="btn-fechar" id="btn-fechar-detalhe">Fechar</button>
+    </div>
+
+    <div class="mensagem-sistema" id="mensagem-detalhe"></div>
+
+  </div>
+</div>
+
+<script type="module">
+
+import { initializeApp, getApps, getApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  query,
+  where,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* CONFIGURAÇÃO FIREBASE */
+
+const firebaseConfig = {
+  apiKey:"AIzaSyDsZUHfZ7EBatnMwwR4FKgPWLjZybIm9KI",
+  authDomain:"walker-midia.firebaseapp.com",
+  databaseURL:"https://walker-midia-default-rtdb.firebaseio.com",
+  projectId:"walker-midia",
+  storageBucket:"walker-midia.firebasestorage.app",
+  messagingSenderId:"223143706690",
+  appId:"1:223143706690:web:3c9e81a0d21173a59caddb"
+};
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+/* SERVIÇOS */
 
 const servicos = [
 {
@@ -320,7 +572,24 @@ imagem:"https://images.unsplash.com/photo-1634942536790-253f5f5e7e6b?w=600"
 }
 ];
 
+
 let servicoSelecionado = null;
+let usuarioAtual = null;
+let pedidoSelecionado = null;
+let pararPedidos = null;
+let pararMensagens = null;
+let enviandoPedido = false;
+let enviandoMensagem = false;
+
+
+/* ELEMENTOS */
+
+const modalFundo = document.getElementById("modal-fundo");
+const mensagem = document.getElementById("mensagem");
+const listaPedidos = document.getElementById("lista-pedidos");
+
+
+/* MONTAR SERVIÇOS */
 
 function montarServicos(){
 
@@ -351,6 +620,9 @@ function montarServicos(){
   });
 }
 
+
+/* ABRIR FORMULÁRIO */
+
 function abrirServico(indice){
 
   servicoSelecionado = servicos[indice];
@@ -361,63 +633,541 @@ function abrirServico(indice){
   document.getElementById("modal-descricao").textContent =
     servicoSelecionado.descricao;
 
-  document.getElementById("mensagem").style.display = "none";
+  mensagem.style.display = "none";
 
-  document.getElementById("modal-fundo").style.display = "flex";
+  document.getElementById("nome").value = "";
+  document.getElementById("empresa").value = "";
+  document.getElementById("site").value = "";
+  document.getElementById("descricao-pedido").value = "";
+
+  modalFundo.style.display = "flex";
 }
+
 
 function fecharServico(){
 
-  document.getElementById("modal-fundo").style.display = "none";
+  modalFundo.style.display = "none";
   servicoSelecionado = null;
 
 }
 
-function enviarPedido(){
 
-  if(!servicoSelecionado)return;
+/* ENVIAR PEDIDO PARA O FIRESTORE */
+
+async function enviarPedido(){
+
+  if(!usuarioAtual){
+    alert("Sua sessão não foi encontrada. Entre novamente.");
+    window.location.href = "./index.html";
+    return;
+  }
+
+  if(!servicoSelecionado || enviandoPedido)return;
 
   const nome = document.getElementById("nome").value.trim();
   const empresa = document.getElementById("empresa").value.trim();
   const site = document.getElementById("site").value.trim();
+  const descricao = document.getElementById("descricao-pedido").value.trim();
 
-  if(!nome || !empresa){
-    alert("Preencha seu nome e o nome da empresa.");
+  if(!nome || !empresa || !descricao){
+    alert("Preencha seu nome, o nome da empresa e explique o que precisa.");
     return;
   }
 
-  // Preparação local do pedido.
-  // Na próxima etapa, este pedido será enviado ao banco
-  // e aparecerá no painel administrativo.
+  const botao = document.getElementById("btn-enviar-pedido");
 
-  const pedido = {
-    servico:servicoSelecionado.nome,
-    nome:nome,
-    empresa:empresa,
-    site:site,
-    status:"Aguardando envio ao ADM",
-    data:new Date().toISOString()
-  };
+  enviandoPedido = true;
+  botao.disabled = true;
+  botao.textContent = "Enviando...";
 
-  console.log("Pedido preparado:",pedido);
+  let pedidoCriado = null;
 
-  const mensagem = document.getElementById("mensagem");
+  try{
 
-  mensagem.textContent =
-    "Solicitação preenchida com sucesso! " +
-    "Na próxima etapa vamos conectar o envio ao painel administrativo.";
+    const pedido = {
+      ownerUid: usuarioAtual.uid,
+      nome: nome,
+      empresa: empresa,
+      site: site,
+      servico: servicoSelecionado.nome,
+      descricao: descricao,
+      status: "Em análise",
+      linkEntrega: "",
+      criadoEm: serverTimestamp()
+    };
 
-  mensagem.style.display = "block";
+    pedidoCriado = await addDoc(
+      collection(db,"solicitacoes"),
+      pedido
+    );
+
+    // A primeira mensagem também entra no histórico.
+
+    await addDoc(
+      collection(db,"solicitacoes",pedidoCriado.id,"mensagens"),
+      {
+        texto: descricao,
+        autorUid: usuarioAtual.uid,
+        autorTipo: "cliente",
+        criadoEm: serverTimestamp()
+      }
+    );
+
+    mensagem.textContent =
+      "Pedido enviado com sucesso! Número do pedido: " +
+      pedidoCriado.id;
+
+    mensagem.style.display = "block";
+
+    document.getElementById("nome").value = "";
+    document.getElementById("empresa").value = "";
+    document.getElementById("site").value = "";
+    document.getElementById("descricao-pedido").value = "";
+
+    iniciarListaPedidos();
+
+    setTimeout(()=>{
+      fecharServico();
+    },2200);
+
+  }catch(erro){
+
+    console.error("Erro ao enviar pedido:",erro);
+
+    if(pedidoCriado){
+
+      mensagem.textContent =
+        "Seu pedido foi criado, mas houve um erro ao registrar a primeira mensagem. O ADM já poderá visualizar a solicitação.";
+
+    }else{
+
+      mensagem.textContent =
+        "Não foi possível enviar o pedido. Verifique sua conexão e tente novamente. Erro: " +
+        erro.message;
+
+    }
+
+    mensagem.style.display = "block";
+
+  }finally{
+
+    enviandoPedido = false;
+    botao.disabled = false;
+    botao.textContent = "Enviar pedido";
+
+  }
 
 }
 
-function sair(){
 
-  window.location.href = "./index.html";
+/* DATA */
+
+function formatarData(timestamp){
+
+  if(!timestamp || !timestamp.toDate)return "Data não disponível";
+
+  return timestamp.toDate().toLocaleString("pt-BR");
 
 }
+
+
+/* LISTAR PEDIDOS DO CLIENTE */
+
+function iniciarListaPedidos(){
+
+  if(!usuarioAtual)return;
+
+  if(pararPedidos){
+    pararPedidos();
+  }
+
+  const consulta = query(
+    collection(db,"solicitacoes"),
+    where("ownerUid","==",usuarioAtual.uid)
+  );
+
+  pararPedidos = onSnapshot(consulta,(snapshot)=>{
+
+    const pedidos = [];
+
+    snapshot.forEach((documento)=>{
+
+      pedidos.push({
+        id: documento.id,
+        ...documento.data()
+      });
+
+    });
+
+    pedidos.sort((a,b)=>{
+
+      const dataA = a.criadoEm?.toMillis?.() || 0;
+      const dataB = b.criadoEm?.toMillis?.() || 0;
+
+      return dataB-dataA;
+
+    });
+
+    mostrarPedidos(pedidos);
+
+  },(erro)=>{
+
+    console.error("Erro ao carregar pedidos:",erro);
+
+    listaPedidos.innerHTML =
+      '<div class="vazio">Não foi possível carregar seus pedidos. Atualize a página e tente novamente.</div>';
+
+  });
+
+}
+
+
+/* MOSTRAR PEDIDOS */
+
+function mostrarPedidos(pedidos){
+
+  listaPedidos.innerHTML = "";
+
+  if(pedidos.length === 0){
+
+    listaPedidos.innerHTML =
+      '<div class="vazio">Você ainda não enviou nenhum pedido.</div>';
+
+    return;
+
+  }
+
+  pedidos.forEach((pedido)=>{
+
+    const card = document.createElement("div");
+    card.className = "pedido-card";
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = pedido.servico || "Serviço solicitado";
+
+    const numero = document.createElement("p");
+    numero.textContent = "Pedido: " + pedido.id;
+
+    const empresa = document.createElement("p");
+    empresa.textContent = "Empresa: " + (pedido.empresa || "-");
+
+    const data = document.createElement("p");
+    data.textContent = "Enviado: " + formatarData(pedido.criadoEm);
+
+    const status = document.createElement("span");
+    status.className = "status";
+    status.textContent = pedido.status || "Em análise";
+
+    const botao = document.createElement("button");
+    botao.className = "btn-detalhes";
+    botao.textContent = "Abrir pedido e acompanhar";
+
+    botao.addEventListener("click",()=>{
+      abrirDetalhes(pedido);
+    });
+
+    card.append(titulo,numero,empresa,data,status,botao);
+
+    listaPedidos.appendChild(card);
+
+  });
+
+}
+
+
+/* ABRIR DETALHES */
+
+function abrirDetalhes(pedido){
+
+  pedidoSelecionado = pedido;
+
+  document.getElementById("detalhe-titulo").textContent =
+    pedido.servico || "Detalhes do pedido";
+
+  document.getElementById("detalhe-status").textContent =
+    "Status: " + (pedido.status || "Em análise");
+
+  document.getElementById("detalhe-empresa").textContent =
+    "Empresa: " + (pedido.empresa || "-");
+
+  document.getElementById("texto-resposta").value = "";
+
+  document.getElementById("mensagem-detalhe").style.display = "none";
+
+  const areaLink = document.getElementById("link-entrega");
+  const link = document.getElementById("link-entrega-url");
+
+  areaLink.style.display = "none";
+  link.removeAttribute("href");
+
+  if(pedido.linkEntrega){
+
+    try{
+
+      const endereco = new URL(pedido.linkEntrega);
+
+      if(endereco.protocol === "https:" || endereco.protocol === "http:"){
+
+        link.href = endereco.href;
+        link.textContent = "Abrir serviço entregue";
+        areaLink.style.display = "block";
+
+      }
+
+    }catch(erro){
+
+      console.warn("Link de entrega inválido.");
+
+    }
+
+  }
+
+  document.getElementById("modal-detalhe-fundo").style.display = "flex";
+
+  iniciarHistorico(pedido.id);
+
+}
+
+
+/* HISTÓRICO DE MENSAGENS */
+
+function iniciarHistorico(pedidoId){
+
+  const historico = document.getElementById("historico");
+
+  historico.innerHTML =
+    '<div class="vazio">Carregando conversa...</div>';
+
+  if(pararMensagens){
+    pararMensagens();
+  }
+
+  const mensagensRef = collection(
+    db,
+    "solicitacoes",
+    pedidoId,
+    "mensagens"
+  );
+
+  pararMensagens = onSnapshot(mensagensRef,(snapshot)=>{
+
+    historico.innerHTML = "";
+
+    const mensagens = [];
+
+    snapshot.forEach((documento)=>{
+
+      mensagens.push({
+        id: documento.id,
+        ...documento.data()
+      });
+
+    });
+
+    mensagens.sort((a,b)=>{
+
+      const dataA = a.criadoEm?.toMillis?.() || 0;
+      const dataB = b.criadoEm?.toMillis?.() || 0;
+
+      return dataA-dataB;
+
+    });
+
+    if(mensagens.length === 0){
+
+      historico.innerHTML =
+        '<div class="vazio">Nenhuma mensagem registrada ainda.</div>';
+
+      return;
+
+    }
+
+    mensagens.forEach((item)=>{
+
+      const caixa = document.createElement("div");
+      caixa.className = "mensagem-item";
+
+      const autor = document.createElement("strong");
+
+      autor.textContent =
+        item.autorTipo === "admin" ? "Davi Walker (ADM)" : "Você";
+
+      const texto = document.createElement("div");
+      texto.textContent = item.texto || "";
+
+      const data = document.createElement("small");
+      data.textContent = formatarData(item.criadoEm);
+
+      caixa.append(autor,texto,data);
+      historico.appendChild(caixa);
+
+    });
+
+  },(erro)=>{
+
+    console.error("Erro no histórico:",erro);
+
+    historico.innerHTML =
+      '<div class="vazio">Não foi possível carregar as mensagens.</div>';
+
+  });
+
+}
+
+
+/* CLIENTE RESPONDE AO ADM */
+
+async function enviarMensagem(){
+
+  if(!usuarioAtual || !pedidoSelecionado || enviandoMensagem)return;
+
+  const campo = document.getElementById("texto-resposta");
+  const texto = campo.value.trim();
+
+  if(!texto){
+    alert("Digite uma mensagem.");
+    return;
+  }
+
+  const botao = document.getElementById("btn-enviar-resposta");
+  const aviso = document.getElementById("mensagem-detalhe");
+
+  enviandoMensagem = true;
+  botao.disabled = true;
+  botao.textContent = "Enviando...";
+
+  try{
+
+    await addDoc(
+      collection(
+        db,
+        "solicitacoes",
+        pedidoSelecionado.id,
+        "mensagens"
+      ),
+      {
+        texto: texto,
+        autorUid: usuarioAtual.uid,
+        autorTipo: "cliente",
+        criadoEm: serverTimestamp()
+      }
+    );
+
+    campo.value = "";
+
+    aviso.textContent = "Mensagem enviada ao ADM.";
+    aviso.style.display = "block";
+
+  }catch(erro){
+
+    console.error("Erro ao enviar mensagem:",erro);
+
+    aviso.textContent =
+      "Não foi possível enviar a mensagem. Tente novamente.";
+
+    aviso.style.display = "block";
+
+  }finally{
+
+    enviandoMensagem = false;
+    botao.disabled = false;
+    botao.textContent = "Enviar mensagem";
+
+  }
+
+}
+
+
+/* FECHAR DETALHES */
+
+function fecharDetalhes(){
+
+  document.getElementById("modal-detalhe-fundo").style.display = "none";
+
+  pedidoSelecionado = null;
+
+  if(pararMensagens){
+    pararMensagens();
+    pararMensagens = null;
+  }
+
+}
+
+
+/* SAIR */
+
+async function sair(){
+
+  try{
+
+    if(pararPedidos)pararPedidos();
+    if(pararMensagens)pararMensagens();
+
+    await signOut(auth);
+
+    window.location.href = "./index.html";
+
+  }catch(erro){
+
+    console.error("Erro ao sair:",erro);
+
+    alert("Não foi possível sair da conta.");
+
+  }
+
+}
+
+
+/* BOTÕES */
+
+document.getElementById("btn-voltar").addEventListener("click",fecharServico);
+
+document.getElementById("btn-enviar-pedido").addEventListener("click",enviarPedido);
+
+document.getElementById("btn-sair").addEventListener("click",sair);
+
+document.getElementById("btn-fechar-detalhe").addEventListener("click",fecharDetalhes);
+
+document.getElementById("btn-enviar-resposta").addEventListener("click",enviarMensagem);
+
+
+/* FECHAR MODAIS AO CLICAR NO FUNDO */
+
+modalFundo.addEventListener("click",(evento)=>{
+
+  if(evento.target === modalFundo){
+    fecharServico();
+  }
+
+});
+
+document.getElementById("modal-detalhe-fundo").addEventListener("click",(evento)=>{
+
+  if(evento.target.id === "modal-detalhe-fundo"){
+    fecharDetalhes();
+  }
+
+});
+
+
+/* INICIAR */
 
 montarServicos();
+
+onAuthStateChanged(auth,(usuario)=>{
+
+  if(!usuario){
+
+    window.location.href = "./index.html";
+    return;
+
+  }
+
+  usuarioAtual = usuario;
+
+  iniciarListaPedidos();
+
+});
 
 </script>
 
