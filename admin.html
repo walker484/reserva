@@ -8,87 +8,108 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#fff;
   color:#174ea6;
 }
-
 header{
-  background:#fff;
+  padding:13px 15px;
   border-bottom:1px solid #dce8f8;
-  padding:12px 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:10px;
+  position:sticky;
+  top:0;
+  background:#fff;
+  z-index:5;
 }
-
 header h1{font-size:18px;margin:0}
-header p{font-size:11px;margin:4px 0 0;color:#64748b}
-
-button{cursor:pointer;font-family:inherit}
-
-.sair{
+header p{font-size:11px;color:#64748b;margin:4px 0 0}
+button{font-family:inherit;cursor:pointer}
+.sair,.botao{
+  border:1px solid #174ea6;
   background:#fff;
   color:#174ea6;
-  border:1px solid #174ea6;
   border-radius:7px;
-  padding:7px 10px;
-  font-size:11px;
+  padding:9px 12px;
+  font-size:12px;
 }
-
+.botao.principal{
+  background:#174ea6;
+  color:white;
+}
 main{
   max-width:950px;
   margin:auto;
   padding:14px;
 }
-
+.menu{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding:10px 0;
+  border-bottom:1px solid #dce8f8;
+  margin-bottom:15px;
+}
+.menu button{
+  flex:1;
+  min-width:75px;
+  border:1px solid #dce8f8;
+  background:white;
+  color:#174ea6;
+  border-radius:7px;
+  padding:10px 7px;
+  font-size:12px;
+}
+.menu button.ativo{
+  background:#174ea6;
+  color:white;
+}
+.pagina{display:none}
+.pagina.ativa{display:block}
 .boas-vindas{
-  background:#fff;
   border:1px solid #dce8f8;
   border-radius:10px;
-  padding:13px;
-  margin-bottom:14px;
+  padding:14px;
+  margin-bottom:15px;
 }
-
-.boas-vindas h2{font-size:16px;margin:0 0 5px}
-.boas-vindas p{font-size:12px;color:#64748b;margin:0}
-
-.titulo-servicos{
-  font-size:14px;
-  margin:15px 0 9px;
+.foto-inicio{
+  width:100%;
+  max-height:230px;
+  height:190px;
+  object-fit:cover;
+  border-radius:9px;
+  margin-bottom:12px;
+  background:#eef4fc;
 }
-
+.boas-vindas h2{font-size:18px;margin:0 0 6px}
+.boas-vindas p{font-size:13px;color:#64748b;line-height:1.5;margin:0}
+.titulo{
+  font-size:16px;
+  margin:15px 0 10px;
+}
 .grade-servicos{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:8px;
 }
-
 .servico{
-  background:#fff;
+  background:white;
   border:1px solid #dce8f8;
   border-radius:8px;
   padding:0;
   overflow:hidden;
   color:#174ea6;
   text-align:center;
-  min-width:0;
 }
-
-.servico:active{transform:scale(.97)}
-.servico:hover{border-color:#174ea6}
-
 .servico img{
   display:block;
   width:100%;
   height:75px;
   object-fit:cover;
 }
-
 .servico span{
   display:flex;
   min-height:35px;
@@ -96,72 +117,117 @@ main{
   justify-content:center;
   padding:5px 3px;
   font-size:10px;
-  line-height:1.2;
   font-weight:bold;
 }
-
+.card{
+  border:1px solid #dce8f8;
+  border-radius:9px;
+  padding:13px;
+  margin-bottom:10px;
+  background:white;
+}
+.card h3{font-size:14px;margin:0 0 8px}
+.card p{
+  font-size:12px;
+  color:#64748b;
+  line-height:1.5;
+  margin:5px 0;
+}
+.campo{
+  width:100%;
+  padding:11px;
+  margin:5px 0 10px;
+  border:1px solid #cbd9ec;
+  border-radius:7px;
+  font-size:13px;
+  color:#24364b;
+  background:white;
+}
+textarea.campo{min-height:85px;resize:vertical}
+label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:8px;
+}
+.acoes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:10px;
+}
+.status{
+  display:inline-block;
+  background:#eef4fc;
+  color:#174ea6;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:11px;
+  margin:5px 0;
+}
+.lista-vazia{
+  color:#64748b;
+  font-size:13px;
+  padding:18px;
+  border:1px dashed #cbd9ec;
+  border-radius:8px;
+  text-align:center;
+}
+.mensagem{
+  background:#f1f6fd;
+  border-radius:8px;
+  padding:10px;
+  margin:7px 0;
+  color:#334155;
+  font-size:12px;
+  line-height:1.5;
+}
+.mensagem.admin{background:#e5efff}
+.mensagem small{
+  display:block;
+  color:#64748b;
+  margin-bottom:4px;
+}
 .modal-fundo{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.55);
-  padding:18px;
+  z-index:10;
+  background:#0008;
+  padding:15px;
   align-items:center;
   justify-content:center;
-  z-index:10;
 }
-
 .modal{
+  background:white;
   width:100%;
-  max-width:420px;
-  background:#fff;
+  max-width:430px;
+  max-height:85vh;
+  overflow:auto;
   border-radius:12px;
-  padding:18px;
-  box-shadow:0 8px 30px #0002;
+  padding:17px;
 }
-
-.modal h2{font-size:19px;margin:0 0 8px}
-
-.modal p{
-  font-size:13px;
-  line-height:1.5;
-  color:#53657c;
+.modal h2{font-size:18px}
+.grafico{
+  width:100%;
+  height:12px;
+  background:#e7eef8;
+  border-radius:10px;
+  overflow:hidden;
+  margin:8px 0;
 }
-
-.modal-acoes{
-  display:flex;
-  gap:8px;
-  margin-top:15px;
-}
-
-.modal-acoes button{
-  flex:1;
-  padding:10px;
-  border-radius:7px;
-  font-size:12px;
-}
-
-.btn-fechar{
-  background:#fff;
-  color:#174ea6;
-  border:1px solid #174ea6;
-}
-
-.btn-abrir{
+.grafico div{
+  height:100%;
   background:#174ea6;
-  color:#fff;
-  border:1px solid #174ea6;
+  width:0;
 }
-
+.pequeno{font-size:11px;color:#64748b}
 @media(max-width:500px){
   main{padding:10px}
-  .grade-servicos{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:6px;
-  }
-  .servico img{height:62px}
+  .grade-servicos{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .servico img{height:58px}
   .servico span{font-size:9px;min-height:32px}
-  header h1{font-size:16px}
+  .menu button{font-size:11px;padding:9px 5px}
 }
 </style>
 </head>
@@ -184,31 +250,160 @@ Verificando acesso administrativo...
 
 <main>
 
-<section class="boas-vindas">
-  <h2>Bem-vindo, Davi!</h2>
-  <p>Gerencie seus serviços e acompanhe as atividades da plataforma.</p>
+<nav class="menu">
+  <button class="ativo" onclick="mostrarPagina('inicio',this)">Início</button>
+  <button onclick="mostrarPagina('pedidos',this)">Pedidos</button>
+  <button onclick="mostrarPagina('servicos',this)">Serviços</button>
+  <button onclick="mostrarPagina('resultados',this)">Resultados</button>
+</nav>
+
+<!-- INÍCIO -->
+<section class="pagina ativa" id="pagina-inicio">
+
+  <div class="boas-vindas">
+    <img class="foto-inicio"
+      src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1000"
+      alt="Espaço de trabalho"
+      onerror="this.style.display='none'">
+
+    <h2>Bem-vindo, Davi!</h2>
+    <p>Gerencie seus serviços, receba pedidos, converse com clientes e acompanhe os resultados dos trabalhos realizados.</p>
+  </div>
+
+  <h2 class="titulo">Resumo da plataforma</h2>
+
+  <div class="card">
+    <h3>Pedidos recebidos</h3>
+    <p id="total-pedidos">Carregando...</p>
+  </div>
+
+  <div class="card">
+    <h3>Pedidos em análise</h3>
+    <p id="total-analise">0</p>
+  </div>
+
+  <div class="card">
+    <h3>Serviços concluídos</h3>
+    <p id="total-concluidos">0</p>
+  </div>
+
 </section>
 
-<h2 class="titulo-servicos">Meus serviços</h2>
+<!-- PEDIDOS -->
+<section class="pagina" id="pagina-pedidos">
 
-<section class="grade-servicos" id="grade-servicos"></section>
+  <h2 class="titulo">Pedidos dos clientes</h2>
+  <p class="pequeno">Aqui aparecem as solicitações enviadas pelo painel do cliente.</p>
+
+  <div id="lista-pedidos">
+    <div class="lista-vazia">Carregando pedidos...</div>
+  </div>
+
+</section>
+
+<!-- SERVIÇOS -->
+<section class="pagina" id="pagina-servicos">
+
+  <h2 class="titulo">Meus 12 serviços</h2>
+  <p class="pequeno">Selecione um serviço para visualizar sua descrição.</p>
+
+  <div class="grade-servicos" id="grade-servicos"></div>
+
+</section>
+
+<!-- RESULTADOS -->
+<section class="pagina" id="pagina-resultados">
+
+  <h2 class="titulo">Resultados dos serviços</h2>
+  <p class="pequeno">Acompanhe os resultados cadastrados nos pedidos concluídos.</p>
+
+  <div id="lista-resultados">
+    <div class="lista-vazia">Nenhum resultado cadastrado ainda.</div>
+  </div>
+
+</section>
 
 </main>
 </div>
 
-<div class="modal-fundo" id="modal-fundo">
+<!-- MODAL SERVIÇO -->
+<div class="modal-fundo" id="modal-servico">
   <div class="modal">
     <h2 id="modal-titulo">Serviço</h2>
     <p id="modal-descricao"></p>
-
-    <div class="modal-acoes">
-      <button class="btn-fechar" onclick="fecharServico()">Voltar</button>
-      <button class="btn-abrir" onclick="abrirAreaServico()">Abrir serviço</button>
+    <div class="acoes">
+      <button class="botao" onclick="fecharModal('modal-servico')">Voltar</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL PEDIDO -->
+<div class="modal-fundo" id="modal-pedido">
+  <div class="modal">
+    <h2>Gerenciar pedido</h2>
+    <div id="pedido-detalhes"></div>
+
+    <label>Status do pedido</label>
+    <select class="campo" id="pedido-status">
+      <option>Em análise</option>
+      <option>Aguardando</option>
+      <option>Concluído</option>
+    </select>
+
+    <label>Link da entrega</label>
+    <input class="campo" id="pedido-link"
+      placeholder="Cole aqui o link do trabalho entregue">
+
+    <label>Resumo do resultado</label>
+    <textarea class="campo" id="pedido-resumo"
+      placeholder="Explique o que foi realizado e o resultado obtido"></textarea>
+
+    <div class="acoes">
+      <button class="botao principal" onclick="salvarPedido()">Salvar alterações</button>
+      <button class="botao" onclick="fecharModal('modal-pedido')">Fechar</button>
+    </div>
+
+    <hr style="border:0;border-top:1px solid #dce8f8;margin:18px 0">
+
+    <h3>Registrar métrica para o gráfico</h3>
+
+    <label>Nome do resultado</label>
+    <input class="campo" id="metrica-nome"
+      placeholder="Ex.: Visitas ao site">
+
+    <label>Quantidade ou valor</label>
+    <input class="campo" id="metrica-valor"
+      type="number" min="0" step="any"
+      placeholder="Ex.: 250">
+
+    <label>Unidade</label>
+    <input class="campo" id="metrica-unidade"
+      placeholder="Ex.: visitas, cliques, contatos">
+
+    <button class="botao principal" onclick="adicionarMetrica()">
+      Registrar resultado
+    </button>
+
+    <hr style="border:0;border-top:1px solid #dce8f8;margin:18px 0">
+
+    <h3>Conversa com o cliente</h3>
+    <div id="historico-mensagens">
+      <p class="pequeno">Carregando conversa...</p>
+    </div>
+
+    <label>Responder ao cliente</label>
+    <textarea class="campo" id="resposta-admin"
+      placeholder="Digite sua mensagem..."></textarea>
+
+    <button class="botao principal" onclick="enviarResposta()">
+      Enviar mensagem
+    </button>
+
+  </div>
+</div>
+
 <script type="module">
+
 import {initializeApp}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -218,6 +413,18 @@ onAuthStateChanged,
 signOut
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+doc,
+updateDoc,
+addDoc,
+onSnapshot,
+serverTimestamp,
+arrayUnion
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyDsZUHfZ7EBatnMwwR4FKgPWLjZybIm9KI",
@@ -230,8 +437,8 @@ appId:"1:223143706690:web:3c9e81a0d21173a59caddb"
 };
 
 const app=initializeApp(firebaseConfig);
-  alert("JAVASCRIPT DO ADMIN FUNCIONOU!");
 const auth=getAuth(app);
+const db=getFirestore(app);
 
 const ADMIN_UID="7TAC1PMMwAMyrL3LUcboCHKjWJq2";
 
@@ -298,61 +505,386 @@ imagem:"https://images.unsplash.com/photo-1634942536790-253f5f5e7e6b?w=600"
 }
 ];
 
-let servicoSelecionado=null;
+let usuarioAtual=null;
+let pedidos=[];
+let pedidoSelecionado=null;
+let pararMensagens=null;
+let pararPedidos=null;
+
+window.mostrarPagina=function(nome,botao){
+document.querySelectorAll(".pagina").forEach(p=>{
+p.classList.remove("ativa");
+});
+document.getElementById("pagina-"+nome).classList.add("ativa");
+
+document.querySelectorAll(".menu button").forEach(b=>{
+b.classList.remove("ativo");
+});
+if(botao)botao.classList.add("ativo");
+
+if(nome==="resultados")montarResultados();
+};
 
 function montarServicos(){
 const grade=document.getElementById("grade-servicos");
+grade.innerHTML="";
 
-servicos.forEach((servico,indice)=>{
+servicos.forEach(servico=>{
 const botao=document.createElement("button");
-botao.type="button";
 botao.className="servico";
+botao.type="button";
 
-const imagem=document.createElement("img");
-imagem.src=servico.imagem;
-imagem.alt=servico.nome;
-imagem.loading="lazy";
+const img=document.createElement("img");
+img.src=servico.imagem;
+img.alt=servico.nome;
+img.loading="lazy";
 
 const nome=document.createElement("span");
 nome.textContent=servico.nome;
 
-botao.append(imagem,nome);
-botao.addEventListener("click",()=>abrirServico(indice));
+botao.append(img,nome);
+
+botao.onclick=()=>{
+document.getElementById("modal-titulo").textContent=servico.nome;
+document.getElementById("modal-descricao").textContent=servico.descricao;
+abrirModal("modal-servico");
+};
 
 grade.appendChild(botao);
 });
 }
 
-function abrirServico(indice){
-servicoSelecionado=servicos[indice];
+function iniciarPedidos(){
+if(pararPedidos)pararPedidos();
 
-document.getElementById("modal-titulo").textContent=
-servicoSelecionado.nome;
+pararPedidos=onSnapshot(
+collection(db,"solicitacoes"),
+(snapshot)=>{
+pedidos=snapshot.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
 
-document.getElementById("modal-descricao").textContent=
-servicoSelecionado.descricao;
+pedidos.sort((a,b)=>{
+const ta=a.criadoEm?.toMillis?.()||0;
+const tb=b.criadoEm?.toMillis?.()||0;
+return tb-ta;
+});
 
-document.getElementById("modal-fundo").style.display="flex";
+mostrarPedidos();
+atualizarResumo();
+},
+(error)=>{
+document.getElementById("lista-pedidos").innerHTML=
+'<div class="lista-vazia">Erro ao carregar pedidos: '+esc(error.message)+'</div>';
+}
+);
 }
 
-window.fecharServico=function(){
-document.getElementById("modal-fundo").style.display="none";
+function mostrarPedidos(){
+const lista=document.getElementById("lista-pedidos");
+lista.innerHTML="";
+
+if(!pedidos.length){
+lista.innerHTML='<div class="lista-vazia">Ainda não existem pedidos recebidos.</div>';
+return;
+}
+
+pedidos.forEach(p=>{
+const card=document.createElement("div");
+card.className="card";
+
+const titulo=document.createElement("h3");
+titulo.textContent=p.servico||"Serviço não informado";
+
+const empresa=document.createElement("p");
+empresa.textContent="Empresa: "+(p.empresa||"Não informada");
+
+const cliente=document.createElement("p");
+cliente.textContent="Cliente: "+(p.nome||"Não informado");
+
+const status=document.createElement("span");
+status.className="status";
+status.textContent=p.status||"Em análise";
+
+const botao=document.createElement("button");
+botao.className="botao principal";
+botao.textContent="Abrir pedido";
+botao.onclick=()=>abrirPedido(p.id);
+
+card.append(titulo,empresa,cliente,status,botao);
+lista.appendChild(card);
+});
+}
+
+function atualizarResumo(){
+document.getElementById("total-pedidos").textContent=pedidos.length;
+
+document.getElementById("total-analise").textContent=
+pedidos.filter(p=>p.status==="Em análise").length;
+
+document.getElementById("total-concluidos").textContent=
+pedidos.filter(p=>p.status==="Concluído").length;
+}
+
+window.abrirPedido=function(id){
+pedidoSelecionado=pedidos.find(p=>p.id===id);
+if(!pedidoSelecionado)return;
+
+document.getElementById("pedido-detalhes").innerHTML=
+"<p><b>Cliente:</b> "+esc(pedidoSelecionado.nome||"")+"</p>"+
+"<p><b>Empresa:</b> "+esc(pedidoSelecionado.empresa||"")+"</p>"+
+"<p><b>Serviço:</b> "+esc(pedidoSelecionado.servico||"")+"</p>"+
+"<p><b>Descrição:</b> "+esc(pedidoSelecionado.descricao||"")+"</p>";
+
+document.getElementById("pedido-status").value=
+pedidoSelecionado.status||"Em análise";
+
+document.getElementById("pedido-link").value=
+pedidoSelecionado.linkEntrega||"";
+
+document.getElementById("pedido-resumo").value=
+pedidoSelecionado.resumoResultado||"";
+
+document.getElementById("metrica-nome").value="";
+document.getElementById("metrica-valor").value="";
+document.getElementById("metrica-unidade").value="";
+document.getElementById("resposta-admin").value="";
+
+abrirModal("modal-pedido");
+iniciarMensagens(id);
 };
 
-window.abrirAreaServico=function(){
-if(!servicoSelecionado)return;
+window.salvarPedido=async function(){
+if(!pedidoSelecionado)return;
 
-alert(
-"Serviço selecionado: "+servicoSelecionado.nome+
-"\nA área de gerenciamento será construída na próxima etapa."
+const status=document.getElementById("pedido-status").value;
+const link=document.getElementById("pedido-link").value.trim();
+const resumo=document.getElementById("pedido-resumo").value.trim();
+
+try{
+const dados={
+status,
+linkEntrega:link,
+resumoResultado:resumo
+};
+
+if(status==="Concluído"){
+dados.dataConclusao=serverTimestamp();
+}
+
+await updateDoc(doc(db,"solicitacoes",pedidoSelecionado.id),dados);
+
+alert("Pedido atualizado!");
+}catch(error){
+alert("Não foi possível salvar: "+error.message);
+}
+};
+
+window.adicionarMetrica=async function(){
+if(!pedidoSelecionado)return;
+
+const nome=document.getElementById("metrica-nome").value.trim();
+const valor=document.getElementById("metrica-valor").value;
+const unidade=document.getElementById("metrica-unidade").value.trim();
+
+if(!nome||valor===""||!unidade){
+alert("Preencha nome, valor e unidade.");
+return;
+}
+
+try{
+const metrica={
+nome,
+valor:Number(valor),
+unidade,
+data:new Date().toISOString()
+};
+
+await updateDoc(doc(db,"solicitacoes",pedidoSelecionado.id),{
+metricas:arrayUnion(metrica)
+});
+
+document.getElementById("metrica-nome").value="";
+document.getElementById("metrica-valor").value="";
+document.getElementById("metrica-unidade").value="";
+
+alert("Resultado registrado!");
+}catch(error){
+alert("Erro ao registrar resultado: "+error.message);
+}
+};
+
+function iniciarMensagens(id){
+if(pararMensagens)pararMensagens();
+
+const area=document.getElementById("historico-mensagens");
+area.innerHTML='<p class="pequeno">Carregando conversa...</p>';
+
+pararMensagens=onSnapshot(
+collection(db,"solicitacoes",id,"mensagens"),
+(snapshot)=>{
+area.innerHTML="";
+
+const mensagens=snapshot.docs.map(d=>d.data());
+mensagens.sort((a,b)=>{
+const ta=a.criadoEm?.toMillis?.()||0;
+const tb=b.criadoEm?.toMillis?.()||0;
+return ta-tb;
+});
+
+if(!mensagens.length){
+area.innerHTML='<p class="pequeno">Nenhuma mensagem ainda.</p>';
+return;
+}
+
+mensagens.forEach(m=>{
+const div=document.createElement("div");
+div.className="mensagem "+(m.autorTipo==="admin"?"admin":"");
+
+const autor=document.createElement("small");
+autor.textContent=m.autorTipo==="admin"?"Davi":"Cliente";
+
+const texto=document.createElement("div");
+texto.textContent=m.texto||"";
+
+div.append(autor,texto);
+area.appendChild(div);
+});
+},
+(error)=>{
+area.textContent="Erro ao carregar mensagens: "+error.message;
+}
 );
+}
+
+window.enviarResposta=async function(){
+if(!pedidoSelecionado)return;
+
+const campo=document.getElementById("resposta-admin");
+const texto=campo.value.trim();
+
+if(!texto){
+alert("Digite uma mensagem.");
+return;
+}
+
+try{
+await addDoc(
+collection(db,"solicitacoes",pedidoSelecionado.id,"mensagens"),
+{
+texto,
+autorUid:usuarioAtual.uid,
+autorTipo:"admin",
+criadoEm:serverTimestamp()
+}
+);
+
+campo.value="";
+}catch(error){
+alert("Erro ao enviar mensagem: "+error.message);
+}
 };
+
+function montarResultados(){
+const lista=document.getElementById("lista-resultados");
+lista.innerHTML="";
+
+const concluidos=pedidos.filter(p=>
+p.status==="Concluído" ||
+(p.metricas&&p.metricas.length)
+);
+
+if(!concluidos.length){
+lista.innerHTML='<div class="lista-vazia">Nenhum serviço concluído com resultados cadastrados.</div>';
+return;
+}
+
+concluidos.forEach(p=>{
+const card=document.createElement("div");
+card.className="card";
+
+const titulo=document.createElement("h3");
+titulo.textContent=p.servico||"Serviço";
+
+const empresa=document.createElement("p");
+empresa.textContent="Empresa: "+(p.empresa||"Não informada");
+
+const resumo=document.createElement("p");
+resumo.textContent=p.resumoResultado||"Sem resumo cadastrado.";
+
+card.append(titulo,empresa,resumo);
+
+(p.metricas||[]).forEach(m=>{
+const linha=document.createElement("div");
+
+const texto=document.createElement("p");
+texto.textContent=m.nome+": "+m.valor+" "+m.unidade;
+
+const barra=document.createElement("div");
+barra.className="grafico";
+
+const preenchimento=document.createElement("div");
+preenchimento.style.width=Math.min(100,Math.max(0,Number(m.valor)))+"%";
+
+barra.appendChild(preenchimento);
+linha.append(texto,barra);
+card.appendChild(linha);
+});
+
+if(p.linkEntrega){
+const link=document.createElement("a");
+link.href=p.linkEntrega;
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent="Abrir entrega do serviço";
+link.style.fontSize="12px";
+card.appendChild(link);
+}
+
+const editar=document.createElement("button");
+editar.className="botao";
+editar.textContent="Abrir pedido";
+editar.onclick=()=>abrirPedido(p.id);
+
+card.appendChild(editar);
+lista.appendChild(card);
+});
+}
+
+function abrirModal(id){
+document.getElementById(id).style.display="flex";
+}
+
+window.fecharModal=function(id){
+document.getElementById(id).style.display="none";
+if(id==="modal-pedido"&&pararMensagens){
+pararMensagens();
+pararMensagens=null;
+}
+};
+
+function esc(valor){
+return String(valor??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c]));
+}
 
 window.sair=async function(){
+try{
+if(pararPedidos)pararPedidos();
+if(pararMensagens)pararMensagens();
 await signOut(auth);
 sessionStorage.removeItem("perfilDaviWalker");
 sessionStorage.removeItem("loginBemVindo");
 window.location.href="./index.html";
+}catch(error){
+alert("Erro ao sair: "+error.message);
+}
 };
 
 onAuthStateChanged(auth,usuario=>{
@@ -368,13 +900,16 @@ window.location.href="./entrada.html";
 return;
 }
 
+usuarioAtual=usuario;
+
 sessionStorage.setItem("perfilDaviWalker","admin");
 
 montarServicos();
+iniciarPedidos();
+
 document.getElementById("area-admin").style.display="block";
 });
-</script>
 
+</script>
 </body>
 </html>
-
