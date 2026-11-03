@@ -8,354 +8,92 @@
 
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#fff;
-  color:#174ea6;
-}
-
-header{
-  background:#fff;
-  border-bottom:1px solid #dce8f8;
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#174ea6}
+header{background:#fff;border-bottom:1px solid #dce8f8;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 header h1{font-size:18px;margin:0}
 header p{font-size:11px;margin:4px 0 0;color:#64748b}
-
 button{cursor:pointer;font-family:inherit}
+button:disabled{opacity:.6;cursor:wait}
+.sair{background:#fff;color:#174ea6;border:1px solid #174ea6;border-radius:7px;padding:7px 10px;font-size:11px}
+main{max-width:950px;margin:auto;padding:14px}
 
-button:disabled{
-  opacity:.6;
-  cursor:wait;
-}
+/* MENU */
+.menu{display:flex;gap:7px;margin-bottom:15px;border-bottom:1px solid #dce8f8;padding-bottom:10px;overflow-x:auto}
+.menu button{flex:1;min-width:95px;padding:9px 7px;border:1px solid #dce8f8;border-radius:7px;background:#fff;color:#174ea6;font-size:11px;font-weight:bold}
+.menu button.ativo{background:#174ea6;color:#fff;border-color:#174ea6}
+.pagina{display:none}
+.pagina.ativa{display:block}
 
-.sair{
-  background:#fff;
-  color:#174ea6;
-  border:1px solid #174ea6;
-  border-radius:7px;
-  padding:7px 10px;
-  font-size:11px;
-}
-
-main{
-  max-width:950px;
-  margin:auto;
-  padding:14px;
-}
-
-.boas-vindas{
-  background:#fff;
-  border:1px solid #dce8f8;
-  border-radius:10px;
-  padding:13px;
-  margin-bottom:14px;
-}
-
+.boas-vindas{background:#fff;border:1px solid #dce8f8;border-radius:10px;padding:13px;margin-bottom:14px}
 .boas-vindas h2{font-size:16px;margin:0 0 5px}
 .boas-vindas p{font-size:12px;color:#64748b;margin:0;line-height:1.5}
-
-.titulo-servicos{
-  font-size:14px;
-  margin:15px 0 9px;
-}
-
-.grade-servicos{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px;
-}
-
-.servico{
-  background:#fff;
-  border:1px solid #dce8f8;
-  border-radius:8px;
-  padding:0;
-  overflow:hidden;
-  color:#174ea6;
-  text-align:center;
-  min-width:0;
-}
-
+.titulo-servicos{font-size:14px;margin:15px 0 9px}
+.grade-servicos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.servico{background:#fff;border:1px solid #dce8f8;border-radius:8px;padding:0;overflow:hidden;color:#174ea6;text-align:center;min-width:0}
 .servico:active{transform:scale(.97)}
 .servico:hover{border-color:#174ea6}
+.servico img{display:block;width:100%;height:75px;object-fit:cover}
+.servico span{display:flex;min-height:35px;align-items:center;justify-content:center;padding:5px 3px;font-size:10px;line-height:1.2;font-weight:bold}
 
-.servico img{
-  display:block;
-  width:100%;
-  height:75px;
-  object-fit:cover;
-}
+/* PEDIDOS */
+.secao-titulo{font-size:16px;margin:0 0 5px}
+.subtitulo{color:#64748b;font-size:12px;margin:0 0 12px}
+.lista-pedidos,.lista-resultados{display:grid;gap:10px}
+.pedido-card,.resultado-card{border:1px solid #dce8f8;border-radius:9px;padding:12px;background:#fff}
+.pedido-card h3{font-size:14px;margin:0 0 7px}
+.pedido-card p{font-size:12px;color:#64748b;margin:5px 0;line-height:1.4}
+.status{display:inline-block;background:#eef5ff;color:#174ea6;border-radius:5px;padding:5px 8px;font-size:11px;margin-top:5px}
+.btn-detalhes{display:block;width:100%;margin-top:10px;padding:9px;border:1px solid #174ea6;border-radius:7px;color:#174ea6;background:#fff;font-size:12px;font-weight:bold}
 
-.servico span{
-  display:flex;
-  min-height:35px;
-  align-items:center;
-  justify-content:center;
-  padding:5px 3px;
-  font-size:10px;
-  line-height:1.2;
-  font-weight:bold;
-}
+/* RESULTADOS E GRÁFICOS */
+.resultado-card h3{font-size:14px;margin:0}
+.resultado-topo{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.resultado-concluido{background:#eef5ff;color:#174ea6;border-radius:5px;padding:5px 8px;font-size:10px;font-weight:bold}
+.resultado-resumo{font-size:12px;line-height:1.5;color:#53657c;margin:10px 0}
+.grafico-titulo{font-size:12px;font-weight:bold;margin:12px 0}
+.metrica{margin:12px 0}
+.metrica-cabecalho{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-bottom:5px}
+.metrica-nome{color:#53657c;overflow-wrap:anywhere}
+.metrica-valor{color:#174ea6;font-weight:bold;text-align:right}
+.barra-fundo{height:9px;background:#edf2f8;border-radius:20px;overflow:hidden}
+.barra-valor{height:100%;background:#174ea6;border-radius:20px;min-width:3px}
+.metrica-data{display:block;color:#94a3b8;font-size:10px;margin-top:4px}
+.resultado-link{display:block;width:100%;margin-top:13px;padding:10px;text-align:center;text-decoration:none;background:#174ea6;color:#fff;border-radius:7px;font-size:12px;font-weight:bold}
+.resultado-sem-link{color:#64748b;font-size:11px;margin-top:10px}
+.resultado-sem-metrica{background:#f7f9fc;padding:10px;border-radius:7px;color:#64748b;font-size:11px;line-height:1.5}
 
-.secao-pedidos{
-  margin-top:25px;
-  border-top:1px solid #dce8f8;
-  padding-top:15px;
-}
-
-.secao-pedidos h2{
-  font-size:16px;
-  margin:0 0 5px;
-}
-
-.subtitulo{
-  color:#64748b;
-  font-size:12px;
-  margin:0 0 12px;
-}
-
-.lista-pedidos{
-  display:grid;
-  gap:9px;
-}
-
-.pedido-card{
-  border:1px solid #dce8f8;
-  border-radius:9px;
-  padding:12px;
-  background:#fff;
-}
-
-.pedido-card h3{
-  font-size:14px;
-  margin:0 0 7px;
-}
-
-.pedido-card p{
-  font-size:12px;
-  color:#64748b;
-  margin:5px 0;
-  line-height:1.4;
-}
-
-.status{
-  display:inline-block;
-  background:#eef5ff;
-  color:#174ea6;
-  border-radius:5px;
-  padding:5px 8px;
-  font-size:11px;
-  margin-top:5px;
-}
-
-.btn-detalhes{
-  display:block;
-  width:100%;
-  margin-top:10px;
-  padding:9px;
-  border:1px solid #174ea6;
-  border-radius:7px;
-  color:#174ea6;
-  background:#fff;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.modal-fundo{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  padding:15px;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-  overflow-y:auto;
-}
-
-.modal{
-  width:100%;
-  max-width:440px;
-  background:#fff;
-  border-radius:12px;
-  padding:18px;
-  box-shadow:0 8px 30px #0002;
-  max-height:90vh;
-  overflow-y:auto;
-}
-
+/* MODAIS */
+.modal-fundo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);padding:15px;align-items:center;justify-content:center;z-index:10;overflow-y:auto}
+.modal{width:100%;max-width:440px;background:#fff;border-radius:12px;padding:18px;box-shadow:0 8px 30px #0002;max-height:90vh;overflow-y:auto}
 .modal h2{font-size:19px;margin:0 0 8px}
-
-.modal p{
-  font-size:13px;
-  line-height:1.5;
-  color:#53657c;
-}
-
+.modal p{font-size:13px;line-height:1.5;color:#53657c}
 .campo{margin-top:12px}
-
-.campo label{
-  display:block;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:5px;
-}
-
-.campo input,
-.campo textarea{
-  width:100%;
-  padding:11px;
-  border:1px solid #dce8f8;
-  border-radius:7px;
-  outline:none;
-  font-size:13px;
-  color:#174ea6;
-  font-family:Arial,sans-serif;
-}
-
-.campo textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-.campo input:focus,
-.campo textarea:focus{border-color:#174ea6}
-
-.modal-acoes{
-  display:flex;
-  gap:8px;
-  margin-top:16px;
-}
-
-.modal-acoes button{
-  flex:1;
-  padding:10px;
-  border-radius:7px;
-  font-size:12px;
-}
-
-.btn-fechar{
-  background:#fff;
-  color:#174ea6;
-  border:1px solid #174ea6;
-}
-
-.btn-abrir{
-  background:#174ea6;
-  color:#fff;
-  border:1px solid #174ea6;
-}
-
-.mensagem-sistema{
-  display:none;
-  margin-top:12px;
-  padding:12px;
-  border-radius:8px;
-  background:#eef5ff;
-  color:#174ea6;
-  font-size:12px;
-  line-height:1.5;
-}
-
-.detalhe-pedido{
-  display:none;
-  margin-top:12px;
-  border-top:1px solid #dce8f8;
-  padding-top:12px;
-}
-
-.historico{
-  display:grid;
-  gap:8px;
-  margin:12px 0;
-}
-
-.mensagem-item{
-  background:#f2f6fc;
-  border-radius:8px;
-  padding:10px;
-  color:#334155;
-  font-size:12px;
-  line-height:1.5;
-}
-
-.mensagem-item strong{
-  display:block;
-  color:#174ea6;
-  margin-bottom:4px;
-}
-
-.link-entrega{
-  display:none;
-  margin:12px 0;
-  padding:12px;
-  border:1px solid #dce8f8;
-  border-radius:8px;
-  font-size:12px;
-}
-
-.link-entrega a{
-  display:block;
-  margin-top:7px;
-  color:#174ea6;
-  font-weight:bold;
-  overflow-wrap:anywhere;
-}
-
-.resposta-area{
-  margin-top:14px;
-  border-top:1px solid #dce8f8;
-  padding-top:12px;
-}
-
-.resposta-area textarea{
-  width:100%;
-  min-height:75px;
-  padding:10px;
-  border:1px solid #dce8f8;
-  border-radius:7px;
-  font-family:Arial,sans-serif;
-  font-size:13px;
-  resize:vertical;
-}
-
-.btn-enviar-resposta{
-  width:100%;
-  margin-top:8px;
-  padding:10px;
-  background:#174ea6;
-  color:white;
-  border:0;
-  border-radius:7px;
-  font-size:12px;
-}
-
-.vazio{
-  padding:15px;
-  border:1px dashed #cbd8e8;
-  border-radius:8px;
-  color:#64748b;
-  font-size:12px;
-  text-align:center;
-}
+.campo label{display:block;font-size:12px;font-weight:bold;margin-bottom:5px}
+.campo input,.campo textarea{width:100%;padding:11px;border:1px solid #dce8f8;border-radius:7px;outline:none;font-size:13px;color:#174ea6;font-family:Arial,sans-serif}
+.campo textarea{min-height:90px;resize:vertical}
+.campo input:focus,.campo textarea:focus{border-color:#174ea6}
+.modal-acoes{display:flex;gap:8px;margin-top:16px}
+.modal-acoes button{flex:1;padding:10px;border-radius:7px;font-size:12px}
+.btn-fechar{background:#fff;color:#174ea6;border:1px solid #174ea6}
+.btn-abrir{background:#174ea6;color:#fff;border:1px solid #174ea6}
+.mensagem-sistema{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#eef5ff;color:#174ea6;font-size:12px;line-height:1.5}
+.detalhe-pedido{margin-top:12px;border-top:1px solid #dce8f8;padding-top:12px}
+.historico{display:grid;gap:8px;margin:12px 0}
+.mensagem-item{background:#f2f6fc;border-radius:8px;padding:10px;color:#334155;font-size:12px;line-height:1.5}
+.mensagem-item strong{display:block;color:#174ea6;margin-bottom:4px}
+.link-entrega{display:none;margin:12px 0;padding:12px;border:1px solid #dce8f8;border-radius:8px;font-size:12px}
+.link-entrega a{display:block;margin-top:7px;color:#174ea6;font-weight:bold;overflow-wrap:anywhere}
+.resposta-area{margin-top:14px;border-top:1px solid #dce8f8;padding-top:12px}
+.resposta-area textarea{width:100%;min-height:75px;padding:10px;border:1px solid #dce8f8;border-radius:7px;font-family:Arial,sans-serif;font-size:13px;resize:vertical}
+.btn-enviar-resposta{width:100%;margin-top:8px;padding:10px;background:#174ea6;color:white;border:0;border-radius:7px;font-size:12px}
+.vazio{padding:15px;border:1px dashed #cbd8e8;border-radius:8px;color:#64748b;font-size:12px;text-align:center}
 
 @media(max-width:500px){
-  main{padding:10px}
-  .grade-servicos{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:6px;
-  }
-  .servico img{height:62px}
-  .servico span{font-size:9px;min-height:32px}
-  header h1{font-size:16px}
+main{padding:10px}
+.grade-servicos{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.servico img{height:62px}
+.servico span{font-size:9px;min-height:32px}
+header h1{font-size:16px}
 }
 </style>
 </head>
@@ -372,30 +110,42 @@ main{
 
 <main>
 
-<section class="boas-vindas">
-  <h2>Bem-vindo à área do cliente!</h2>
-  <p>Escolha um serviço, informe seus dados e envie sua solicitação para Davi Walker. Depois acompanhe o atendimento nesta página.</p>
+<nav class="menu">
+  <button class="ativo" data-pagina="pagina-servicos">Serviços</button>
+  <button data-pagina="pagina-pedidos">Meus pedidos</button>
+  <button data-pagina="pagina-resultados">Resultados</button>
+</nav>
+
+<section class="pagina ativa" id="pagina-servicos">
+  <section class="boas-vindas">
+    <h2>Bem-vindo à área do cliente!</h2>
+    <p>Escolha um serviço, informe seus dados e envie sua solicitação para Davi Walker. Depois acompanhe o atendimento nesta página.</p>
+  </section>
+  <h2 class="titulo-servicos">Escolha o serviço desejado</h2>
+  <section class="grade-servicos" id="grade-servicos"></section>
 </section>
 
-<h2 class="titulo-servicos">Escolha o serviço desejado</h2>
-
-<section class="grade-servicos" id="grade-servicos"></section>
-
-<section class="secao-pedidos">
-  <h2>Meus pedidos</h2>
-  <p class="subtitulo">Acompanhe o andamento das suas solicitações.</p>
+<section class="pagina" id="pagina-pedidos">
+  <h2 class="secao-titulo">Meus pedidos</h2>
+  <p class="subtitulo">Acompanhe o andamento das suas solicitações e converse com o ADM.</p>
   <div id="lista-pedidos" class="lista-pedidos">
     <div class="vazio">Carregando seus pedidos...</div>
   </div>
 </section>
 
+<section class="pagina" id="pagina-resultados">
+  <h2 class="secao-titulo">Resultados dos serviços</h2>
+  <p class="subtitulo">Cada serviço concluído aparece separado, com seu gráfico, resumo e link de entrega.</p>
+  <div id="lista-resultados" class="lista-resultados">
+    <div class="vazio">Carregando resultados...</div>
+  </div>
+</section>
+
 </main>
 
-<!-- MODAL DE NOVO PEDIDO -->
-
+<!-- MODAL NOVO PEDIDO -->
 <div class="modal-fundo" id="modal-fundo">
   <div class="modal">
-
     <h2 id="modal-titulo">Solicitar serviço</h2>
     <p id="modal-descricao"></p>
 
@@ -423,17 +173,13 @@ main{
       <button class="btn-fechar" id="btn-voltar">Voltar</button>
       <button class="btn-abrir" id="btn-enviar-pedido">Enviar pedido</button>
     </div>
-
     <div class="mensagem-sistema" id="mensagem"></div>
-
   </div>
 </div>
 
-<!-- MODAL DE ACOMPANHAMENTO -->
-
+<!-- MODAL ACOMPANHAMENTO -->
 <div class="modal-fundo" id="modal-detalhe-fundo">
   <div class="modal">
-
     <h2 id="detalhe-titulo">Detalhes do pedido</h2>
     <p id="detalhe-status"></p>
     <p id="detalhe-empresa"></p>
@@ -452,311 +198,217 @@ main{
           Enviar mensagem ao ADM
         </label>
         <textarea id="texto-resposta" placeholder="Digite sua mensagem..."></textarea>
-        <button class="btn-enviar-resposta" id="btn-enviar-resposta">
-          Enviar mensagem
-        </button>
+        <button class="btn-enviar-resposta" id="btn-enviar-resposta">Enviar mensagem</button>
       </div>
     </div>
 
     <div class="modal-acoes">
       <button class="btn-fechar" id="btn-fechar-detalhe">Fechar</button>
     </div>
-
     <div class="mensagem-sistema" id="mensagem-detalhe"></div>
-
   </div>
 </div>
 
 <script type="module">
 
-import { initializeApp, getApps, getApp }
+import {initializeApp,getApps,getApp}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
+getAuth,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  doc,
-  query,
-  where,
-  onSnapshot,
-  serverTimestamp
+getFirestore,collection,addDoc,query,where,onSnapshot,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-/* CONFIGURAÇÃO FIREBASE */
+/* FIREBASE */
 
-const firebaseConfig = {
-  apiKey:"AIzaSyDsZUHfZ7EBatnMwwR4FKgPWLjZybIm9KI",
-  authDomain:"walker-midia.firebaseapp.com",
-  databaseURL:"https://walker-midia-default-rtdb.firebaseio.com",
-  projectId:"walker-midia",
-  storageBucket:"walker-midia.firebasestorage.app",
-  messagingSenderId:"223143706690",
-  appId:"1:223143706690:web:3c9e81a0d21173a59caddb"
+const firebaseConfig={
+apiKey:"AIzaSyDsZUHfZ7EBatnMwwR4FKgPWLjZybIm9KI",
+authDomain:"walker-midia.firebaseapp.com",
+databaseURL:"https://walker-midia-default-rtdb.firebaseio.com",
+projectId:"walker-midia",
+storageBucket:"walker-midia.firebasestorage.app",
+messagingSenderId:"223143706690",
+appId:"1:223143706690:web:3c9e81a0d21173a59caddb"
 };
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app=getApps().length?getApp():initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
 
 /* SERVIÇOS */
 
-const servicos = [
-{
-nome:"SEO",
-descricao:"Estratégias para ajudar empresas e produtos a aparecerem nas pesquisas do Google.",
-imagem:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600"
-},
-{
-nome:"Tráfego Pago",
-descricao:"Criação e planejamento de anúncios pagos para divulgar produtos e serviços.",
-imagem:"https://images.unsplash.com/photo-1557838923-2985c318be48?w=600"
-},
-{
-nome:"Marketing de Conteúdo",
-descricao:"Criação de textos e conteúdos para apresentar produtos, serviços e empresas.",
-imagem:"https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600"
-},
-{
-nome:"Redes Sociais",
-descricao:"Planejamento de publicações e divulgação de empresas nas redes sociais.",
-imagem:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600"
-},
-{
-nome:"E-mail Marketing",
-descricao:"Criação de mensagens para apresentar novidades, ofertas e informações aos clientes.",
-imagem:"https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600"
-},
-{
-nome:"Métricas",
-descricao:"Acompanhamento dos resultados das campanhas e análise de indicadores.",
-imagem:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600"
-},
-{
-nome:"Fotografia de Produtos",
-descricao:"Apresentação visual de produtos por meio de fotografias para divulgação.",
-imagem:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600"
-},
-{
-nome:"Vídeos Publicitários",
-descricao:"Produção e planejamento de vídeos para apresentar empresas e produtos.",
-imagem:"https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600"
-},
-{
-nome:"Catálogo e Loja Virtual",
-descricao:"Organização de produtos em catálogos digitais e páginas de venda.",
-imagem:"https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600"
-},
-{
-nome:"Marketing Local",
-descricao:"Divulgação de empresas para alcançar clientes de sua região.",
-imagem:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600"
-},
-{
-nome:"Planejamento de Campanhas",
-descricao:"Organização de ações e campanhas para divulgar produtos e serviços.",
-imagem:"https://images.unsplash.com/photo-1552664730-d307ca884978?w=600"
-},
-{
-nome:"Identidade Visual",
-descricao:"Criação e organização da apresentação visual e da marca de uma empresa.",
-imagem:"https://images.unsplash.com/photo-1634942536790-253f5f5e7e6b?w=600"
-}
+const servicos=[
+{nome:"SEO",descricao:"Estratégias para ajudar empresas e produtos a aparecerem nas pesquisas do Google.",imagem:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600"},
+{nome:"Tráfego Pago",descricao:"Criação e planejamento de anúncios pagos para divulgar produtos e serviços.",imagem:"https://images.unsplash.com/photo-1557838923-2985c318be48?w=600"},
+{nome:"Marketing de Conteúdo",descricao:"Criação de textos e conteúdos para apresentar produtos, serviços e empresas.",imagem:"https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600"},
+{nome:"Redes Sociais",descricao:"Planejamento de publicações e divulgação de empresas nas redes sociais.",imagem:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600"},
+{nome:"E-mail Marketing",descricao:"Criação de mensagens para apresentar novidades, ofertas e informações aos clientes.",imagem:"https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=600"},
+{nome:"Métricas",descricao:"Acompanhamento dos resultados das campanhas e análise de indicadores.",imagem:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600"},
+{nome:"Fotografia de Produtos",descricao:"Apresentação visual de produtos por meio de fotografias para divulgação.",imagem:"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600"},
+{nome:"Vídeos Publicitários",descricao:"Produção e planejamento de vídeos para apresentar empresas e produtos.",imagem:"https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600"},
+{nome:"Catálogo e Loja Virtual",descricao:"Organização de produtos em catálogos digitais e páginas de venda.",imagem:"https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600"},
+{nome:"Marketing Local",descricao:"Divulgação de empresas para alcançar clientes de sua região.",imagem:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600"},
+{nome:"Planejamento de Campanhas",descricao:"Organização de ações e campanhas para divulgar produtos e serviços.",imagem:"https://images.unsplash.com/photo-1552664730-d307ca884978?w=600"},
+{nome:"Identidade Visual",descricao:"Criação e organização da apresentação visual e da marca de uma empresa.",imagem:"https://images.unsplash.com/photo-1634942536790-253f5f5e7e6b?w=600"}
 ];
 
+let servicoSelecionado=null;
+let usuarioAtual=null;
+let pedidoSelecionado=null;
+let pararPedidos=null;
+let pararMensagens=null;
+let enviandoPedido=false;
+let enviandoMensagem=false;
 
-let servicoSelecionado = null;
-let usuarioAtual = null;
-let pedidoSelecionado = null;
-let pararPedidos = null;
-let pararMensagens = null;
-let enviandoPedido = false;
-let enviandoMensagem = false;
+const modalFundo=document.getElementById("modal-fundo");
+const mensagem=document.getElementById("mensagem");
+const listaPedidos=document.getElementById("lista-pedidos");
+const listaResultados=document.getElementById("lista-resultados");
 
 
-/* ELEMENTOS */
+/* MENU */
 
-const modalFundo = document.getElementById("modal-fundo");
-const mensagem = document.getElementById("mensagem");
-const listaPedidos = document.getElementById("lista-pedidos");
+document.querySelectorAll(".menu button").forEach(botao=>{
+botao.addEventListener("click",()=>{
+document.querySelectorAll(".menu button").forEach(b=>b.classList.remove("ativo"));
+document.querySelectorAll(".pagina").forEach(p=>p.classList.remove("ativa"));
+
+botao.classList.add("ativo");
+document.getElementById(botao.dataset.pagina).classList.add("ativa");
+});
+});
 
 
 /* MONTAR SERVIÇOS */
 
 function montarServicos(){
+const grade=document.getElementById("grade-servicos");
 
-  const grade = document.getElementById("grade-servicos");
+servicos.forEach((servico,indice)=>{
+const botao=document.createElement("button");
+botao.type="button";
+botao.className="servico";
 
-  servicos.forEach((servico,indice)=>{
+const imagem=document.createElement("img");
+imagem.src=servico.imagem;
+imagem.alt=servico.nome;
+imagem.loading="lazy";
 
-    const botao = document.createElement("button");
-    botao.type = "button";
-    botao.className = "servico";
+const nome=document.createElement("span");
+nome.textContent=servico.nome;
 
-    const imagem = document.createElement("img");
-    imagem.src = servico.imagem;
-    imagem.alt = servico.nome;
-    imagem.loading = "lazy";
-
-    const nome = document.createElement("span");
-    nome.textContent = servico.nome;
-
-    botao.append(imagem,nome);
-
-    botao.addEventListener("click",()=>{
-      abrirServico(indice);
-    });
-
-    grade.appendChild(botao);
-
-  });
+botao.append(imagem,nome);
+botao.addEventListener("click",()=>abrirServico(indice));
+grade.appendChild(botao);
+});
 }
 
 
 /* ABRIR FORMULÁRIO */
 
 function abrirServico(indice){
+servicoSelecionado=servicos[indice];
 
-  servicoSelecionado = servicos[indice];
+document.getElementById("modal-titulo").textContent="Solicitar: "+servicoSelecionado.nome;
+document.getElementById("modal-descricao").textContent=servicoSelecionado.descricao;
+mensagem.style.display="none";
 
-  document.getElementById("modal-titulo").textContent =
-    "Solicitar: " + servicoSelecionado.nome;
+document.getElementById("nome").value="";
+document.getElementById("empresa").value="";
+document.getElementById("site").value="";
+document.getElementById("descricao-pedido").value="";
 
-  document.getElementById("modal-descricao").textContent =
-    servicoSelecionado.descricao;
-
-  mensagem.style.display = "none";
-
-  document.getElementById("nome").value = "";
-  document.getElementById("empresa").value = "";
-  document.getElementById("site").value = "";
-  document.getElementById("descricao-pedido").value = "";
-
-  modalFundo.style.display = "flex";
+modalFundo.style.display="flex";
 }
-
 
 function fecharServico(){
-
-  modalFundo.style.display = "none";
-  servicoSelecionado = null;
-
+modalFundo.style.display="none";
+servicoSelecionado=null;
 }
 
 
-/* ENVIAR PEDIDO PARA O FIRESTORE */
+/* ENVIAR PEDIDO */
 
 async function enviarPedido(){
 
-  if(!usuarioAtual){
-    alert("Sua sessão não foi encontrada. Entre novamente.");
-    window.location.href = "./index.html";
-    return;
-  }
+if(!usuarioAtual){
+alert("Sua sessão não foi encontrada. Entre novamente.");
+window.location.href="./index.html";
+return;
+}
 
-  if(!servicoSelecionado || enviandoPedido)return;
+if(!servicoSelecionado||enviandoPedido)return;
 
-  const nome = document.getElementById("nome").value.trim();
-  const empresa = document.getElementById("empresa").value.trim();
-  const site = document.getElementById("site").value.trim();
-  const descricao = document.getElementById("descricao-pedido").value.trim();
+const nome=document.getElementById("nome").value.trim();
+const empresa=document.getElementById("empresa").value.trim();
+const site=document.getElementById("site").value.trim();
+const descricao=document.getElementById("descricao-pedido").value.trim();
 
-  if(!nome || !empresa || !descricao){
-    alert("Preencha seu nome, o nome da empresa e explique o que precisa.");
-    return;
-  }
+if(!nome||!empresa||!descricao){
+alert("Preencha seu nome, o nome da empresa e explique o que precisa.");
+return;
+}
 
-  const botao = document.getElementById("btn-enviar-pedido");
+const botao=document.getElementById("btn-enviar-pedido");
+enviandoPedido=true;
+botao.disabled=true;
+botao.textContent="Enviando...";
 
-  enviandoPedido = true;
-  botao.disabled = true;
-  botao.textContent = "Enviando...";
+let pedidoCriado=null;
 
-  let pedidoCriado = null;
+try{
 
-  try{
+pedidoCriado=await addDoc(collection(db,"solicitacoes"),{
+ownerUid:usuarioAtual.uid,
+nome:nome,
+empresa:empresa,
+site:site,
+servico:servicoSelecionado.nome,
+descricao:descricao,
+status:"Em análise",
+linkEntrega:"",
+criadoEm:serverTimestamp()
+});
 
-    const pedido = {
-      ownerUid: usuarioAtual.uid,
-      nome: nome,
-      empresa: empresa,
-      site: site,
-      servico: servicoSelecionado.nome,
-      descricao: descricao,
-      status: "Em análise",
-      linkEntrega: "",
-      criadoEm: serverTimestamp()
-    };
+await addDoc(collection(db,"solicitacoes",pedidoCriado.id,"mensagens"),{
+texto:descricao,
+autorUid:usuarioAtual.uid,
+autorTipo:"cliente",
+criadoEm:serverTimestamp()
+});
 
-    pedidoCriado = await addDoc(
-      collection(db,"solicitacoes"),
-      pedido
-    );
+mensagem.textContent="Pedido enviado com sucesso! Número do pedido: "+pedidoCriado.id;
+mensagem.style.display="block";
 
-    // A primeira mensagem também entra no histórico.
+document.getElementById("nome").value="";
+document.getElementById("empresa").value="";
+document.getElementById("site").value="";
+document.getElementById("descricao-pedido").value="";
 
-    await addDoc(
-      collection(db,"solicitacoes",pedidoCriado.id,"mensagens"),
-      {
-        texto: descricao,
-        autorUid: usuarioAtual.uid,
-        autorTipo: "cliente",
-        criadoEm: serverTimestamp()
-      }
-    );
+setTimeout(fecharServico,2200);
 
-    mensagem.textContent =
-      "Pedido enviado com sucesso! Número do pedido: " +
-      pedidoCriado.id;
+}catch(erro){
 
-    mensagem.style.display = "block";
+console.error("Erro ao enviar pedido:",erro);
 
-    document.getElementById("nome").value = "";
-    document.getElementById("empresa").value = "";
-    document.getElementById("site").value = "";
-    document.getElementById("descricao-pedido").value = "";
+mensagem.textContent=pedidoCriado
+?"Seu pedido foi criado, mas houve erro ao registrar a primeira mensagem."
+:"Não foi possível enviar o pedido. Verifique sua conexão. Erro: "+erro.message;
 
-    iniciarListaPedidos();
+mensagem.style.display="block";
 
-    setTimeout(()=>{
-      fecharServico();
-    },2200);
+}finally{
 
-  }catch(erro){
+enviandoPedido=false;
+botao.disabled=false;
+botao.textContent="Enviar pedido";
 
-    console.error("Erro ao enviar pedido:",erro);
-
-    if(pedidoCriado){
-
-      mensagem.textContent =
-        "Seu pedido foi criado, mas houve um erro ao registrar a primeira mensagem. O ADM já poderá visualizar a solicitação.";
-
-    }else{
-
-      mensagem.textContent =
-        "Não foi possível enviar o pedido. Verifique sua conexão e tente novamente. Erro: " +
-        erro.message;
-
-    }
-
-    mensagem.style.display = "block";
-
-  }finally{
-
-    enviandoPedido = false;
-    botao.disabled = false;
-    botao.textContent = "Enviar pedido";
-
-  }
-
+}
 }
 
 
@@ -764,61 +416,72 @@ async function enviarPedido(){
 
 function formatarData(timestamp){
 
-  if(!timestamp || !timestamp.toDate)return "Data não disponível";
+if(!timestamp)return "Data não disponível";
 
-  return timestamp.toDate().toLocaleString("pt-BR");
+if(typeof timestamp==="string"){
+const data=new Date(timestamp);
+return isNaN(data.getTime())?"Data não disponível":data.toLocaleDateString("pt-BR");
+}
 
+if(timestamp.toDate){
+return timestamp.toDate().toLocaleString("pt-BR");
+}
+
+return "Data não disponível";
 }
 
 
-/* LISTAR PEDIDOS DO CLIENTE */
+/* VALIDAR LINK */
+
+function linkSeguro(valor){
+
+if(!valor||typeof valor!=="string")return "";
+
+try{
+const url=new URL(valor);
+if(url.protocol==="https:"||url.protocol==="http:")return url.href;
+}catch(e){}
+
+return "";
+}
+
+
+/* LISTAR PEDIDOS */
 
 function iniciarListaPedidos(){
 
-  if(!usuarioAtual)return;
+if(!usuarioAtual)return;
+if(pararPedidos)pararPedidos();
 
-  if(pararPedidos){
-    pararPedidos();
-  }
+const consulta=query(
+collection(db,"solicitacoes"),
+where("ownerUid","==",usuarioAtual.uid)
+);
 
-  const consulta = query(
-    collection(db,"solicitacoes"),
-    where("ownerUid","==",usuarioAtual.uid)
-  );
+pararPedidos=onSnapshot(consulta,(snapshot)=>{
 
-  pararPedidos = onSnapshot(consulta,(snapshot)=>{
+const pedidos=[];
 
-    const pedidos = [];
+snapshot.forEach(documento=>{
+pedidos.push({id:documento.id,...documento.data()});
+});
 
-    snapshot.forEach((documento)=>{
+pedidos.sort((a,b)=>{
+const dataA=a.criadoEm?.toMillis?.()||0;
+const dataB=b.criadoEm?.toMillis?.()||0;
+return dataB-dataA;
+});
 
-      pedidos.push({
-        id: documento.id,
-        ...documento.data()
-      });
+mostrarPedidos(pedidos);
+mostrarResultados(pedidos);
 
-    });
+},erro=>{
 
-    pedidos.sort((a,b)=>{
+console.error("Erro ao carregar pedidos:",erro);
+listaPedidos.innerHTML='<div class="vazio">Não foi possível carregar seus pedidos.</div>';
+listaResultados.innerHTML='<div class="vazio">Não foi possível carregar os resultados.</div>';
 
-      const dataA = a.criadoEm?.toMillis?.() || 0;
-      const dataB = b.criadoEm?.toMillis?.() || 0;
-
-      return dataB-dataA;
-
-    });
-
-    mostrarPedidos(pedidos);
-
-  },(erro)=>{
-
-    console.error("Erro ao carregar pedidos:",erro);
-
-    listaPedidos.innerHTML =
-      '<div class="vazio">Não foi possível carregar seus pedidos. Atualize a página e tente novamente.</div>';
-
-  });
-
+});
 }
 
 
@@ -826,51 +489,191 @@ function iniciarListaPedidos(){
 
 function mostrarPedidos(pedidos){
 
-  listaPedidos.innerHTML = "";
+listaPedidos.innerHTML="";
 
-  if(pedidos.length === 0){
+if(pedidos.length===0){
+listaPedidos.innerHTML='<div class="vazio">Você ainda não enviou nenhum pedido.</div>';
+return;
+}
 
-    listaPedidos.innerHTML =
-      '<div class="vazio">Você ainda não enviou nenhum pedido.</div>';
+pedidos.forEach(pedido=>{
 
-    return;
+const card=document.createElement("div");
+card.className="pedido-card";
 
-  }
+const titulo=document.createElement("h3");
+titulo.textContent=pedido.servico||"Serviço solicitado";
 
-  pedidos.forEach((pedido)=>{
+const numero=document.createElement("p");
+numero.textContent="Pedido: "+pedido.id;
 
-    const card = document.createElement("div");
-    card.className = "pedido-card";
+const empresa=document.createElement("p");
+empresa.textContent="Empresa: "+(pedido.empresa||"-");
 
-    const titulo = document.createElement("h3");
-    titulo.textContent = pedido.servico || "Serviço solicitado";
+const data=document.createElement("p");
+data.textContent="Enviado: "+formatarData(pedido.criadoEm);
 
-    const numero = document.createElement("p");
-    numero.textContent = "Pedido: " + pedido.id;
+const status=document.createElement("span");
+status.className="status";
+status.textContent=pedido.status||"Em análise";
 
-    const empresa = document.createElement("p");
-    empresa.textContent = "Empresa: " + (pedido.empresa || "-");
+const botao=document.createElement("button");
+botao.className="btn-detalhes";
+botao.textContent="Abrir pedido e acompanhar";
+botao.addEventListener("click",()=>abrirDetalhes(pedido));
 
-    const data = document.createElement("p");
-    data.textContent = "Enviado: " + formatarData(pedido.criadoEm);
+card.append(titulo,numero,empresa,data,status,botao);
+listaPedidos.appendChild(card);
 
-    const status = document.createElement("span");
-    status.className = "status";
-    status.textContent = pedido.status || "Em análise";
+});
+}
 
-    const botao = document.createElement("button");
-    botao.className = "btn-detalhes";
-    botao.textContent = "Abrir pedido e acompanhar";
 
-    botao.addEventListener("click",()=>{
-      abrirDetalhes(pedido);
-    });
+/* RESULTADOS DOS SERVIÇOS CONCLUÍDOS */
 
-    card.append(titulo,numero,empresa,data,status,botao);
+function mostrarResultados(pedidos){
 
-    listaPedidos.appendChild(card);
+listaResultados.innerHTML="";
 
-  });
+const concluidos=pedidos.filter(pedido=>
+String(pedido.status||"").trim().toLowerCase()==="concluído" ||
+String(pedido.status||"").trim().toLowerCase()==="concluido"
+);
+
+if(concluidos.length===0){
+listaResultados.innerHTML='<div class="vazio">Seus serviços concluídos aparecerão aqui, cada um com seu gráfico e link de entrega.</div>';
+return;
+}
+
+concluidos.forEach(pedido=>{
+
+const card=document.createElement("div");
+card.className="resultado-card";
+
+const topo=document.createElement("div");
+topo.className="resultado-topo";
+
+const titulo=document.createElement("h3");
+titulo.textContent=pedido.servico||"Serviço concluído";
+
+const selo=document.createElement("span");
+selo.className="resultado-concluido";
+selo.textContent="Concluído";
+
+topo.append(titulo,selo);
+card.appendChild(topo);
+
+const empresa=document.createElement("p");
+empresa.className="resultado-resumo";
+empresa.textContent="Empresa: "+(pedido.empresa||"-");
+card.appendChild(empresa);
+
+if(pedido.resumoResultado){
+
+const resumo=document.createElement("p");
+resumo.className="resultado-resumo";
+resumo.textContent=pedido.resumoResultado;
+card.appendChild(resumo);
+
+}
+
+const metricas=Array.isArray(pedido.metricas)?pedido.metricas:[];
+
+if(metricas.length){
+
+const tituloGrafico=document.createElement("div");
+tituloGrafico.className="grafico-titulo";
+tituloGrafico.textContent="Gráfico de resultados";
+card.appendChild(tituloGrafico);
+
+/* Cada gráfico usa os valores registrados neste pedido. */
+
+const valores=metricas.map(m=>Number(m.valor)).filter(v=>Number.isFinite(v)&&v>=0);
+const maiorValor=Math.max(...valores,0);
+
+metricas.forEach(metrica=>{
+
+const valor=Number(metrica.valor);
+const linha=document.createElement("div");
+linha.className="metrica";
+
+const cabecalho=document.createElement("div");
+cabecalho.className="metrica-cabecalho";
+
+const nome=document.createElement("span");
+nome.className="metrica-nome";
+nome.textContent=metrica.nome||"Indicador";
+
+const valorTexto=document.createElement("span");
+valorTexto.className="metrica-valor";
+valorTexto.textContent=
+(Number.isFinite(valor)?valor.toLocaleString("pt-BR"):"-")+
+(metrica.unidade?" "+metrica.unidade:"");
+
+cabecalho.append(nome,valorTexto);
+
+const fundo=document.createElement("div");
+fundo.className="barra-fundo";
+
+const barra=document.createElement("div");
+barra.className="barra-valor";
+
+/* A barra compara as métricas do mesmo serviço.
+   Não representa percentual de crescimento. */
+
+const largura=Number.isFinite(valor)&&maiorValor>0
+?Math.max(2,(valor/maiorValor)*100)
+:0;
+
+barra.style.width=largura+"%";
+fundo.appendChild(barra);
+
+linha.append(cabecalho,fundo);
+
+if(metrica.data){
+const data=document.createElement("small");
+data.className="metrica-data";
+data.textContent="Registrado: "+formatarData(metrica.data);
+linha.appendChild(data);
+}
+
+card.appendChild(linha);
+
+});
+
+}else{
+
+const semMetrica=document.createElement("div");
+semMetrica.className="resultado-sem-metrica";
+semMetrica.textContent="O serviço foi concluído. O ADM ainda não cadastrou métricas para mostrar o gráfico.";
+card.appendChild(semMetrica);
+
+}
+
+const endereco=linkSeguro(pedido.linkEntrega);
+
+if(endereco){
+
+const link=document.createElement("a");
+link.className="resultado-link";
+link.href=endereco;
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent="Abrir serviço entregue";
+card.appendChild(link);
+
+}else{
+
+const semLink=document.createElement("div");
+semLink.className="resultado-sem-link";
+semLink.textContent="O link da entrega ainda não foi cadastrado pelo ADM.";
+card.appendChild(semLink);
+
+}
+
+listaResultados.appendChild(card);
+
+});
 
 }
 
@@ -879,52 +682,29 @@ function mostrarPedidos(pedidos){
 
 function abrirDetalhes(pedido){
 
-  pedidoSelecionado = pedido;
+pedidoSelecionado=pedido;
 
-  document.getElementById("detalhe-titulo").textContent =
-    pedido.servico || "Detalhes do pedido";
+document.getElementById("detalhe-titulo").textContent=pedido.servico||"Detalhes do pedido";
+document.getElementById("detalhe-status").textContent="Status: "+(pedido.status||"Em análise");
+document.getElementById("detalhe-empresa").textContent="Empresa: "+(pedido.empresa||"-");
+document.getElementById("texto-resposta").value="";
+document.getElementById("mensagem-detalhe").style.display="none";
 
-  document.getElementById("detalhe-status").textContent =
-    "Status: " + (pedido.status || "Em análise");
+const areaLink=document.getElementById("link-entrega");
+const link=document.getElementById("link-entrega-url");
+const endereco=linkSeguro(pedido.linkEntrega);
 
-  document.getElementById("detalhe-empresa").textContent =
-    "Empresa: " + (pedido.empresa || "-");
+areaLink.style.display="none";
+link.removeAttribute("href");
 
-  document.getElementById("texto-resposta").value = "";
+if(endereco){
+link.href=endereco;
+link.textContent="Abrir serviço entregue";
+areaLink.style.display="block";
+}
 
-  document.getElementById("mensagem-detalhe").style.display = "none";
-
-  const areaLink = document.getElementById("link-entrega");
-  const link = document.getElementById("link-entrega-url");
-
-  areaLink.style.display = "none";
-  link.removeAttribute("href");
-
-  if(pedido.linkEntrega){
-
-    try{
-
-      const endereco = new URL(pedido.linkEntrega);
-
-      if(endereco.protocol === "https:" || endereco.protocol === "http:"){
-
-        link.href = endereco.href;
-        link.textContent = "Abrir serviço entregue";
-        areaLink.style.display = "block";
-
-      }
-
-    }catch(erro){
-
-      console.warn("Link de entrega inválido.");
-
-    }
-
-  }
-
-  document.getElementById("modal-detalhe-fundo").style.display = "flex";
-
-  iniciarHistorico(pedido.id);
+document.getElementById("modal-detalhe-fundo").style.display="flex";
+iniciarHistorico(pedido.id);
 
 }
 
@@ -933,84 +713,58 @@ function abrirDetalhes(pedido){
 
 function iniciarHistorico(pedidoId){
 
-  const historico = document.getElementById("historico");
+const historico=document.getElementById("historico");
+historico.innerHTML='<div class="vazio">Carregando conversa...</div>';
 
-  historico.innerHTML =
-    '<div class="vazio">Carregando conversa...</div>';
+if(pararMensagens)pararMensagens();
 
-  if(pararMensagens){
-    pararMensagens();
-  }
+const mensagensRef=collection(db,"solicitacoes",pedidoId,"mensagens");
 
-  const mensagensRef = collection(
-    db,
-    "solicitacoes",
-    pedidoId,
-    "mensagens"
-  );
+pararMensagens=onSnapshot(mensagensRef,snapshot=>{
 
-  pararMensagens = onSnapshot(mensagensRef,(snapshot)=>{
+historico.innerHTML="";
+const mensagens=[];
 
-    historico.innerHTML = "";
+snapshot.forEach(documento=>{
+mensagens.push({id:documento.id,...documento.data()});
+});
 
-    const mensagens = [];
+mensagens.sort((a,b)=>{
+const dataA=a.criadoEm?.toMillis?.()||0;
+const dataB=b.criadoEm?.toMillis?.()||0;
+return dataA-dataB;
+});
 
-    snapshot.forEach((documento)=>{
+if(mensagens.length===0){
+historico.innerHTML='<div class="vazio">Nenhuma mensagem registrada ainda.</div>';
+return;
+}
 
-      mensagens.push({
-        id: documento.id,
-        ...documento.data()
-      });
+mensagens.forEach(item=>{
 
-    });
+const caixa=document.createElement("div");
+caixa.className="mensagem-item";
 
-    mensagens.sort((a,b)=>{
+const autor=document.createElement("strong");
+autor.textContent=item.autorTipo==="admin"?"Davi Walker (ADM)":"Você";
 
-      const dataA = a.criadoEm?.toMillis?.() || 0;
-      const dataB = b.criadoEm?.toMillis?.() || 0;
+const texto=document.createElement("div");
+texto.textContent=item.texto||"";
 
-      return dataA-dataB;
+const data=document.createElement("small");
+data.textContent=formatarData(item.criadoEm);
 
-    });
+caixa.append(autor,texto,data);
+historico.appendChild(caixa);
 
-    if(mensagens.length === 0){
+});
 
-      historico.innerHTML =
-        '<div class="vazio">Nenhuma mensagem registrada ainda.</div>';
+},erro=>{
 
-      return;
+console.error("Erro no histórico:",erro);
+historico.innerHTML='<div class="vazio">Não foi possível carregar as mensagens.</div>';
 
-    }
-
-    mensagens.forEach((item)=>{
-
-      const caixa = document.createElement("div");
-      caixa.className = "mensagem-item";
-
-      const autor = document.createElement("strong");
-
-      autor.textContent =
-        item.autorTipo === "admin" ? "Davi Walker (ADM)" : "Você";
-
-      const texto = document.createElement("div");
-      texto.textContent = item.texto || "";
-
-      const data = document.createElement("small");
-      data.textContent = formatarData(item.criadoEm);
-
-      caixa.append(autor,texto,data);
-      historico.appendChild(caixa);
-
-    });
-
-  },(erro)=>{
-
-    console.error("Erro no histórico:",erro);
-
-    historico.innerHTML =
-      '<div class="vazio">Não foi possível carregar as mensagens.</div>';
-
-  });
+});
 
 }
 
@@ -1019,77 +773,67 @@ function iniciarHistorico(pedidoId){
 
 async function enviarMensagem(){
 
-  if(!usuarioAtual || !pedidoSelecionado || enviandoMensagem)return;
+if(!usuarioAtual||!pedidoSelecionado||enviandoMensagem)return;
 
-  const campo = document.getElementById("texto-resposta");
-  const texto = campo.value.trim();
+const campo=document.getElementById("texto-resposta");
+const texto=campo.value.trim();
 
-  if(!texto){
-    alert("Digite uma mensagem.");
-    return;
-  }
+if(!texto){
+alert("Digite uma mensagem.");
+return;
+}
 
-  const botao = document.getElementById("btn-enviar-resposta");
-  const aviso = document.getElementById("mensagem-detalhe");
+const botao=document.getElementById("btn-enviar-resposta");
+const aviso=document.getElementById("mensagem-detalhe");
 
-  enviandoMensagem = true;
-  botao.disabled = true;
-  botao.textContent = "Enviando...";
+enviandoMensagem=true;
+botao.disabled=true;
+botao.textContent="Enviando...";
 
-  try{
+try{
 
-    await addDoc(
-      collection(
-        db,
-        "solicitacoes",
-        pedidoSelecionado.id,
-        "mensagens"
-      ),
-      {
-        texto: texto,
-        autorUid: usuarioAtual.uid,
-        autorTipo: "cliente",
-        criadoEm: serverTimestamp()
-      }
-    );
+await addDoc(
+collection(db,"solicitacoes",pedidoSelecionado.id,"mensagens"),
+{
+texto:texto,
+autorUid:usuarioAtual.uid,
+autorTipo:"cliente",
+criadoEm:serverTimestamp()
+}
+);
 
-    campo.value = "";
+campo.value="";
+aviso.textContent="Mensagem enviada ao ADM.";
+aviso.style.display="block";
 
-    aviso.textContent = "Mensagem enviada ao ADM.";
-    aviso.style.display = "block";
+}catch(erro){
 
-  }catch(erro){
+console.error("Erro ao enviar mensagem:",erro);
+aviso.textContent="Não foi possível enviar a mensagem. Tente novamente.";
+aviso.style.display="block";
 
-    console.error("Erro ao enviar mensagem:",erro);
+}finally{
 
-    aviso.textContent =
-      "Não foi possível enviar a mensagem. Tente novamente.";
+enviandoMensagem=false;
+botao.disabled=false;
+botao.textContent="Enviar mensagem";
 
-    aviso.style.display = "block";
-
-  }finally{
-
-    enviandoMensagem = false;
-    botao.disabled = false;
-    botao.textContent = "Enviar mensagem";
-
-  }
+}
 
 }
 
 
-/* FECHAR DETALHES */
+/* FECHAR MODAIS */
 
 function fecharDetalhes(){
 
-  document.getElementById("modal-detalhe-fundo").style.display = "none";
+document.getElementById("modal-detalhe-fundo").style.display="none";
+pedidoSelecionado=null;
 
-  pedidoSelecionado = null;
-
-  if(pararMensagens){
-    pararMensagens();
-    pararMensagens = null;
-  }
+if(pararMensagens){
+pararMensagens();
+pararMensagens=null;
+}
 
 }
 
@@ -1098,22 +842,20 @@ function fecharDetalhes(){
 
 async function sair(){
 
-  try{
+try{
 
-    if(pararPedidos)pararPedidos();
-    if(pararMensagens)pararMensagens();
+if(pararPedidos)pararPedidos();
+if(pararMensagens)pararMensagens();
 
-    await signOut(auth);
+await signOut(auth);
+window.location.href="./index.html";
 
-    window.location.href = "./index.html";
+}catch(erro){
 
-  }catch(erro){
+console.error("Erro ao sair:",erro);
+alert("Não foi possível sair da conta.");
 
-    console.error("Erro ao sair:",erro);
-
-    alert("Não foi possível sair da conta.");
-
-  }
+}
 
 }
 
@@ -1121,32 +863,17 @@ async function sair(){
 /* BOTÕES */
 
 document.getElementById("btn-voltar").addEventListener("click",fecharServico);
-
 document.getElementById("btn-enviar-pedido").addEventListener("click",enviarPedido);
-
 document.getElementById("btn-sair").addEventListener("click",sair);
-
 document.getElementById("btn-fechar-detalhe").addEventListener("click",fecharDetalhes);
-
 document.getElementById("btn-enviar-resposta").addEventListener("click",enviarMensagem);
 
-
-/* FECHAR MODAIS AO CLICAR NO FUNDO */
-
-modalFundo.addEventListener("click",(evento)=>{
-
-  if(evento.target === modalFundo){
-    fecharServico();
-  }
-
+modalFundo.addEventListener("click",evento=>{
+if(evento.target===modalFundo)fecharServico();
 });
 
-document.getElementById("modal-detalhe-fundo").addEventListener("click",(evento)=>{
-
-  if(evento.target.id === "modal-detalhe-fundo"){
-    fecharDetalhes();
-  }
-
+document.getElementById("modal-detalhe-fundo").addEventListener("click",evento=>{
+if(evento.target.id==="modal-detalhe-fundo")fecharDetalhes();
 });
 
 
@@ -1154,22 +881,18 @@ document.getElementById("modal-detalhe-fundo").addEventListener("click",(evento)
 
 montarServicos();
 
-onAuthStateChanged(auth,(usuario)=>{
+onAuthStateChanged(auth,usuario=>{
 
-  if(!usuario){
+if(!usuario){
+window.location.href="./index.html";
+return;
+}
 
-    window.location.href = "./index.html";
-    return;
-
-  }
-
-  usuarioAtual = usuario;
-
-  iniciarListaPedidos();
+usuarioAtual=usuario;
+iniciarListaPedidos();
 
 });
 
 </script>
-
 </body>
 </html>
