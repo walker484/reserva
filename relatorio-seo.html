@@ -1,1 +1,361 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVI WALKER | Relatório SEO</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fc;
+  color:#174ea6;
+}
+
+header{
+  background:#fff;
+  padding:20px;
+  border-bottom:2px solid #dce8fa;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:25px;
+}
+
+header p{
+  margin:5px 0 0;
+  color:#6683ad;
+}
+
+.container{
+  max-width:850px;
+  margin:25px auto;
+  padding:15px;
+}
+
+.card{
+  background:#fff;
+  padding:22px;
+  border:1px solid #dce8fa;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+
+h2{
+  font-size:19px;
+  margin-top:0;
+}
+
+label{
+  display:block;
+  margin:14px 0 6px;
+  font-weight:bold;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #cbdaf0;
+  border-radius:7px;
+  font-size:15px;
+  color:#174ea6;
+  background:#fff;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  padding:13px 17px;
+  border:0;
+  border-radius:7px;
+  background:#174ea6;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:8px 5px 0 0;
+}
+
+button.secundario{
+  background:#e8f0fc;
+  color:#174ea6;
+  border:1px solid #b9cdec;
+}
+
+#resultado{
+  display:none;
+}
+
+.relatorio{
+  background:#fff;
+  padding:28px;
+  border:1px solid #dce8fa;
+  border-radius:10px;
+  color:#174ea6;
+}
+
+.relatorio h1{
+  margin-bottom:3px;
+}
+
+.linha{
+  border-bottom:1px solid #dce8fa;
+  margin:18px 0;
+}
+
+.campo{
+  margin:13px 0;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+
+.status{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:20px;
+  background:#e8f0fc;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  color:#8297b7;
+  font-size:12px;
+  padding:20px;
+}
+
+@media print{
+  body{background:white}
+  header,.formulario,.acoes,footer{display:none!important}
+  .container{margin:0;padding:0;max-width:none}
+  #resultado{display:block!important}
+  .relatorio{border:0;padding:10px}
+  button{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>DAVI WALKER</h1>
+  <p>MARKETING DIGITAL</p>
+</header>
+
+<div class="container">
+
+<section class="card formulario">
+
+<h2>Cadastro do relatório SEO</h2>
+<p>Preencha as informações do serviço realizado para o cliente.</p>
+
+<label>Nome do cliente</label>
+<input id="cliente" placeholder="Nome completo">
+
+<label>Nome da empresa</label>
+<input id="empresa" placeholder="Nome da empresa">
+
+<label>E-mail do cliente</label>
+<input id="email" type="email" placeholder="E-mail">
+
+<label>Endereço do site</label>
+<input id="site" type="url" placeholder="https://www.exemplo.com.br">
+
+<label>Data do serviço</label>
+<input id="data" type="date">
+
+<div class="linha"></div>
+
+<h2>Atividades realizadas</h2>
+
+<label>Configuração SEO</label>
+<select id="configuracao">
+<option value="Não realizado">Não realizado</option>
+<option value="Realizado">Realizado</option>
+<option value="Em andamento">Em andamento</option>
+</select>
+
+<label>Envio do sitemap ao Google</label>
+<select id="sitemap">
+<option value="Não realizado">Não realizado</option>
+<option value="Enviado">Enviado</option>
+<option value="Erro no envio">Erro no envio</option>
+</select>
+
+<label>Situação da indexação</label>
+<select id="indexacao">
+<option value="Ainda não verificada">Ainda não verificada</option>
+<option value="Aguardando análise do Google">Aguardando análise do Google</option>
+<option value="Páginas indexadas">Páginas indexadas</option>
+<option value="Indexação parcial">Indexação parcial</option>
+<option value="Páginas não indexadas">Páginas não indexadas</option>
+</select>
+
+<label>Quantidade de páginas verificadas</label>
+<input id="paginas" type="number" min="0" placeholder="Ex.: 5">
+
+<label>Quantidade de páginas indexadas</label>
+<input id="indexadas" type="number" min="0" placeholder="Ex.: 3">
+
+<label>O que foi realizado?</label>
+<textarea id="realizado" placeholder="Descreva as atividades realizadas..."></textarea>
+
+<label>Resultados e observações</label>
+<textarea id="resultados" placeholder="Descreva os resultados verificados..."></textarea>
+
+<label>Próximas melhorias recomendadas</label>
+<textarea id="melhorias" placeholder="Descreva as próximas melhorias..."></textarea>
+
+<label>Link de acompanhamento ou demonstração</label>
+<input id="link" type="url" placeholder="https://...">
+
+<button onclick="gerar()">GERAR RELATÓRIO</button>
+
+</section>
+
+<section id="resultado">
+
+<div class="relatorio">
+
+<h1>DAVI WALKER</h1>
+<p>MARKETING DIGITAL</p>
+
+<div class="linha"></div>
+
+<h2>RELATÓRIO DE SERVIÇO SEO</h2>
+<p>Relatório de acompanhamento e atividades realizadas.</p>
+
+<div class="linha"></div>
+
+<div class="campo"><b>Cliente:</b> <span id="rCliente"></span></div>
+<div class="campo"><b>Empresa:</b> <span id="rEmpresa"></span></div>
+<div class="campo"><b>E-mail:</b> <span id="rEmail"></span></div>
+<div class="campo"><b>Site:</b> <span id="rSite"></span></div>
+<div class="campo"><b>Data:</b> <span id="rData"></span></div>
+
+<div class="linha"></div>
+
+<h2>Atividades realizadas</h2>
+
+<div class="campo"><b>Configuração SEO:</b> <span id="rConfiguracao"></span></div>
+<div class="campo"><b>Sitemap:</b> <span id="rSitemap"></span></div>
+<div class="campo"><b>Indexação:</b> <span id="rIndexacao"></span></div>
+
+<div class="campo"><b>Páginas verificadas:</b> <span id="rPaginas"></span></div>
+<div class="campo"><b>Páginas indexadas:</b> <span id="rIndexadas"></span></div>
+
+<div class="linha"></div>
+
+<h2>Descrição do trabalho</h2>
+<div class="campo" id="rRealizado"></div>
+
+<div class="linha"></div>
+
+<h2>Resultados e observações</h2>
+<div class="campo" id="rResultados"></div>
+
+<div class="linha"></div>
+
+<h2>Próximas melhorias</h2>
+<div class="campo" id="rMelhorias"></div>
+
+<div class="linha"></div>
+
+<h2>Link de acompanhamento</h2>
+<div class="campo" id="rLink"></div>
+
+<div class="linha"></div>
+
+<p><b>Responsável:</b> Davi Walker</p>
+<p>Obrigado pela confiança!</p>
+
+</div>
+
+<div class="acoes">
+<button onclick="window.print()">IMPRIMIR / SALVAR PDF</button>
+<button class="secundario" onclick="voltar()">EDITAR RELATÓRIO</button>
+<button class="secundario" onclick="window.print()">GERAR CÓPIA</button>
+</div>
+
+</section>
+
+</div>
+
+<footer>
+DAVI WALKER | Marketing Digital
+</footer>
+
+<script>
+
+function valor(id){
+  return document.getElementById(id).value.trim();
+}
+
+function preencher(destino,origem){
+  document.getElementById(destino).textContent =
+    valor(origem) || "Não informado";
+}
+
+function gerar(){
+
+  if(!valor("cliente") || !valor("empresa") || !valor("site")){
+    alert("Preencha o nome do cliente, empresa e endereço do site.");
+    return;
+  }
+
+  if(valor("site") && !/^https?:\/\//i.test(valor("site"))){
+    alert("Informe o endereço do site começando com https://");
+    return;
+  }
+
+  const total = Number(valor("paginas"));
+  const indexadas = Number(valor("indexadas"));
+
+  if(indexadas > total && valor("paginas") !== ""){
+    alert("A quantidade de páginas indexadas não pode ser maior que a quantidade verificada.");
+    return;
+  }
+
+  preencher("rCliente","cliente");
+  preencher("rEmpresa","empresa");
+  preencher("rEmail","email");
+  preencher("rSite","site");
+  preencher("rData","data");
+  preencher("rConfiguracao","configuracao");
+  preencher("rSitemap","sitemap");
+  preencher("rIndexacao","indexacao");
+  preencher("rPaginas","paginas");
+  preencher("rIndexadas","indexadas");
+  preencher("rRealizado","realizado");
+  preencher("rResultados","resultados");
+  preencher("rMelhorias","melhorias");
+  preencher("rLink","link");
+
+  document.getElementById("resultado").style.display="block";
+
+  document.getElementById("resultado").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function voltar(){
+  document.getElementById("resultado").style.display="none";
+  document.querySelector(".formulario").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+</script>
+
+</body>
+</html>
+
